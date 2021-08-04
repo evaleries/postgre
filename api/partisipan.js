@@ -192,7 +192,8 @@ function start(app, data, writeLog) {
                         writeLog("Partisipan", "PUT", result.value);
                         res.json(
                             {
-                                "res": "success"
+                                "res": "success",
+                                "data": result.value
                             }
                         )
                     } else {
