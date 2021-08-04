@@ -4,9 +4,12 @@
 - [ ] Pemateri sort by popularity (?)
 - [ ] Event
 - [ ] Dokumentasi
-- [ ] Partisipan
+- [x] Partisipan
+- [ ] Partisipan Send Email
 - [ ] Better log
 # Documentation
+Reminder
+GET Requests always return an array instead of json.
 ## /api/pemateri
 ### GET
 #### Params
@@ -79,4 +82,92 @@ Result
 ```
 ## /api/event
 ## /api/dokumentasi
+## /api/partisipan/list
+### GET
+Result
+```
+[{"_id":"610a37245ded2ec5425c34ba","nama":"Minato Yukina","email":"yukina@roselia.jp","no":"080808","asal":"Bandori","info":"Song I am."},{"_id":"610a48504ae2bc3c9898bd3b","nama":"Mostima","email":"mostima@arknights.jp","no":"01234","asal":"Laterano","info":"laterano"}]
+```
+## /api/partisipan/cek
+### GET
+#### Params
+```
+email: str //1st priority
+no: str //2nd priority
+```
+Example:
+```
+{
+    email: "mostima@arknights.jp"
+}
+```
+Result
+```
+[{"_id":"610a48504ae2bc3c9898bd3b","nama":"Mostima","email":"mostima@arknights.jp","no":"01234","asal":"Laterano","info":"laterano"}]
+```
 ## /api/partisipan
+### POST
+#### Params
+```
+{
+nama: str
+email: str
+no: str
+asal: str
+info: str
+}
+```
+Example:
+```
+{
+    nama: "Mostima",
+    email: "mostima@arknights.jp",
+    no: "01234",
+    asal: "Laterano",
+    info: "laterano"
+}
+```
+Result
+```
+{"res":"success","_id":"610a48504ae2bc3c9898bd3b"}
+```
+### PUT
+#### Params
+```
+email: to search (1st)
+no: to search (2nd)
+new data -> pilih, asal salah satu ada, gk bener" kosong
+newnama
+newemail
+newno
+newasal
+newinfo
+```
+Example:
+```
+{
+    email: "mostima@arknights.jp",
+    newnama: "Exusiai",
+    info: "Apple Pie"
+}
+```
+Result: return the original one.
+```
+{"res":"success","data":{"_id":"610a48504ae2bc3c9898bd3b","nama":"Mostima","email":"mostima@arknights.jp","no":"01234","asal":"Laterano","info":"laterano"}}
+```
+### DELETE
+#### Params
+```
+email: to search (1st)
+no: to search (2nd)
+```
+Example:
+```
+{
+    email: "mostima@arknights.jp"
+}
+```
+Result
+```
+{"res":"success"}
+```
