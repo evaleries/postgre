@@ -58,6 +58,14 @@ let postgre = {
         }
         console.log("[" + collection + "]" + "[" + method + "] " + msg);
     }
+};
+function shuffle(arr) {
+    var i = arr.length, rng;
+    while(0 !== i) {
+        rng = Math.floor(Math.random() * i);
+        i--;
+        [arr[i], arr[rng]] = [arr[rng], arr[i]];
+    }
 }
 
 //Main
@@ -117,17 +125,25 @@ MongoClient.connect(database.url, {
     /**** READ ****/
     /*
     Parameter:
-    nama (kalo -1 berarti smua)
+    nama
+    count (opt)
+    random (opt) 1 or no
     */
     app.get("/api/pemateri", function(req, res) {
         let param = req.query;
-        if(param.nama && param.nama != "-1") {
+        if(param.nama) {
             data.pemateri.find({
                 "nama": {
                     "$regex": param.nama,
                     "$options": "i"
                 }
             }).toArray().then(result => {
+                if(param.random == '1') {
+                    shuffle(result);
+                }
+                if(parseInt(param.count) > 0 && parseInt(param.count) != NaN) {
+                    result = result.slice(0, param.count);
+                }
                 res.json(result);
                 postgre.log("Pemateri", "GET", param.nama);
             }).catch(err => {
@@ -140,7 +156,14 @@ MongoClient.connect(database.url, {
             });
         } else {
             data.pemateri.find().toArray().then(result => {
+                if(param.random == '1') {
+                    shuffle(result);
+                }
+                if(parseInt(param.count) > 0 && parseInt(param.count) != NaN) {
+                    result = result.slice(0, param.count);
+                }
                 res.json(result);
+                postgre.log("Pemateri", "GET", param.nama);
             }).catch(err => {
                 console.error(err);
                 res.status(400).send(

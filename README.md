@@ -1,6 +1,7 @@
 # postgre-backend
 # To do
 - [x] Pemateri
+- [ ] Pemateri sort by popularity (?)
 - [ ] Event
 - [ ] Dokumentasi
 - [ ] Partisipan
@@ -11,10 +12,19 @@
 #### Params
 ```
 nama: str //optional
+count: int //optional
+random: 1 or none //optional
+```
+Example:
+```
+{
+    count: 2,
+    random: 1
+}
 ```
 Result
 ```
-[{"_id":"610a1da78115519ffc6f1234","nama":"Amane Kanata","desc":"Hololive 4th gen","foto":""}]
+[{"_id":"610a22356a1344b60bd6e1fc","nama":"Nakiri Ayame","desc":"FAMS","foto":""},{"_id":"610984edbe9aacdacace9566","nama":"Riezqu Ibnanta","desc":"","foto":""}]
 ```
 ### POST
 #### Params
