@@ -1,3 +1,5 @@
+const mongodb = require('mongodb');
+
 function shuffle(arr) {
     var i = arr.length, rng;
     while(0 !== i) {
@@ -108,48 +110,64 @@ function start(app, data, writeLog) {
     Parameter:
     id
     nama -> buat ganti ke baru
+    desc
+    foto
     */
     app.put("/api/pemateri", function(req, res) {
         //do we need this ?
         let param = req.body;
         //update by id
-        if(param.id && param.nama) {
-            data.pemateri.findOneAndUpdate(
-                {
-                    "_id": new mongodb.ObjectId(param.id)
-                },
-                {
-                    $set: {
-                        "nama": param.nama
+        if(param.id) {
+            let newData = {};
+            if(param.nama)
+                newData.nama = param.nama;
+            if(param.desc)
+                newData.desc = param.desc;
+            if(param.foto)
+                newData.foto = param.foto;
+            if(Object.keys(newData).length > 0) {
+                data.pemateri.findOneAndUpdate(
+                    {
+                        "_id": new mongodb.ObjectId(param.id)
+                    },
+                    {
+                        $set: newData
+                    },
+                    {
+                        upsert: false,
+                        returnNewDocument: true
                     }
-                },
-                {
-                    upsert: false,
-                    returnNewDocument: true
-                }
-            ).then(result => {
-                if(result.value) {
-                    writeLog("Pemateri", "PUT", result.value);
-                    res.json(
-                        {
-                            "res": "success"
-                        }
-                    )
-                } else {
+                ).then(result => {
+                    if(result.value) {
+                        writeLog("Pemateri", "PUT", result.value);
+                        res.json(
+                            {
+                                "res": "success",
+                                "data": result.value
+                            }
+                        )
+                    } else {
+                        res.status(400).send(
+                            {
+                                "res": "Not found"
+                            }
+                        )
+                    }
+                }).catch(err => {
+                    console.error(err);
                     res.status(400).send(
                         {
-                            "res": "Not found"
+                            "res": err
                         }
-                    )
-                }
-            }).catch(err => {
-                console.error(err);
+                    );
+                })
+            } else {
                 res.status(400).send(
                     {
-                        "res": err
+                        "res": "missing new data"
                     }
-                );
-            })
+                )
+            }
         } else {
             res.json({});
         }
