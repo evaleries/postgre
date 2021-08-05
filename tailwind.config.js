@@ -1,5 +1,3 @@
-const plugin = require('tailwindcss/plugin');
-
 module.exports = {
   mode: 'jit',
   purge: ['./pages/**/*.{js,ts,jsx,tsx}', './components/**/*.{js,ts,jsx,tsx}'],
@@ -30,21 +28,5 @@ module.exports = {
   variants: {
     extend: {},
   },
-  plugins: [
-    plugin(function ({ addUtilities }) {
-      const utilities = {
-        '.bg-hero': {
-          'background-image': 'url(/assets/bg-hero.webp)',
-          'background-size': 'cover',
-          'background-position': '25% 100%',
-        },
-        '.bg-footer': {
-          background:
-            'linear-gradient(280.05deg, #0A4FA4 0%, #939CE8 127.73%);',
-        },
-      };
-
-      addUtilities(utilities);
-    }),
-  ],
+  plugins: [],
 };
