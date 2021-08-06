@@ -1,25 +1,65 @@
 import Nav from '../Nav';
 import Image from 'next/image';
+import SwiperCore, { Navigation, EffectCoverflow, Autoplay } from 'swiper';
+import { Swiper, SwiperSlide } from 'swiper/react';
 
+SwiperCore.use([Navigation, EffectCoverflow, Autoplay]);
 export default function Hero() {
   return (
     <div className="bg-hero">
       <Nav />
       <div className="pb-40 2xl:pb-56 relative">
         <div className="max-w-max mt-10 mx-auto flex flex-col justify-center items-center sm:max-w-4xl lg:items-start lg:justify-between lg:flex-row xl:max-w-6xl">
-          <div className="lg:order-1 w-11/12 md:w-5/12 max-w-2xl relative shadow-md">
-            <Image
-              src="/assets/hero-img.jpg"
-              alt="Postgre"
-              layout="responsive"
-              width={1920}
-              height={1080}
-              className="rounded-lg z-10"
-              priority
-            />
-            <div className="w-full h-full hidden md:inline scale-80 rounded-lg bg-white/25 absolute top-0 md:-left-24 xl:-left-28"></div>
-            <div className="w-full h-full hidden md:inline scale-90 rounded-lg bg-[#8EADDA] absolute top-0 md:-left-14 xl:-left-14"></div>
-          </div>
+          <Swiper
+            spaceBetween={50}
+            slidesPerView="auto"
+            navigation
+            autoplay={{
+              delay: 2500,
+              disableOnInteraction: false,
+            }}
+            effect="coverflow"
+            grabCursor={true}
+            centeredSlides={true}
+            coverflowEffect={{
+              rotate: 40,
+            }}
+            className="lg:order-1 w-11/12 md:w-5/12 max-w-2xl rounded-lg relative"
+          >
+            <SwiperSlide className="shadow-lg">
+              <Image
+                src="/assets/hero-img.jpg"
+                alt="Postgre"
+                layout="responsive"
+                width={1920}
+                height={1080}
+                className="rounded-lg bg-red-600"
+                priority
+              />
+            </SwiperSlide>
+            <SwiperSlide className="shadow-md">
+              <Image
+                src="/assets/DocsPostgre20201.png"
+                alt="Postgre"
+                layout="responsive"
+                width={1920}
+                height={1080}
+                className="rounded-lg shadow-md"
+                priority
+              />
+            </SwiperSlide>
+            <SwiperSlide>
+              <Image
+                src="/assets/DocsPostgre20202.png"
+                alt="Postgre"
+                layout="responsive"
+                width={1920}
+                height={1080}
+                className="rounded-lg shadow-md"
+                priority
+              />
+            </SwiperSlide>
+          </Swiper>
           <header className="text-white flex flex-col lg:ml-8">
             <h1 className="font-bold text-3xl my-6 lg:text-5xl 2xl:text-6xl 2xl:mb-14">
               POSTGRE 2021
