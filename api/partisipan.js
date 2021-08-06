@@ -15,7 +15,9 @@ function start(app, data, writeLog) {
         if(!(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(param.email))) {
             res.json(
                 {
-                    "res": "invalid email"
+                    "code": 400,
+                    "success": false,
+                    "message": "Invalid email"
                 }
             )
             return;
@@ -31,24 +33,31 @@ function start(app, data, writeLog) {
             data.partisipan.insertOne(
                 orang
             ).then(result => {
+                orang["_id"] = result.insertedId
                 res.send(
                     {
-                        "res": "success",
-                        "_id": result.insertedId
+                        "code": 200,
+                        "success": false,
+                        "message": "ok",
+                        "data": orang
                     }
                 );
                 writeLog("Partisipan", "POST", orang);
             }).catch(err => {
                 console.error(err);
-                res.status(400).send(
+                res.json(
                     {
-                        "res": err
+                        "code": 200,
+                        "success": false,
+                        "message": err
                     }
                 );
             })
         } else {
-            res.json({
-                "res": "Missing parameter"
+            res.status(400).send({
+                "code": 400,
+                "success": false,
+                "message": "Missing parameter"
             });
         }
     });
@@ -87,25 +96,39 @@ function start(app, data, writeLog) {
         //not empty param
         if(Object.keys(filter).length > 0) {
             data.partisipan.find(filter).toArray().then(result => {
-                res.json(result);
+                res.json({
+                    "code": 200,
+                    "success": false,
+                    "message": "ok",
+                    "data": result
+                });
                 writeLog("Partisipan", "GET", param.nama);
             }).catch(err => {
                 console.error(err);
-                res.status(400).send(
+                res.json(
                     {
-                        "res": err
+                        "code": 200,
+                        "success": false,
+                        "message": err
                     }
                 );
             });
         } else {
             data.partisipan.find().toArray().then(result => {
-                res.json(result);
+                res.json({
+                    "code": 200,
+                    "success": false,
+                    "message": "ok",
+                    "data": result
+                });
                 writeLog("Partisipan", "GET", param.nama);
             }).catch(err => {
                 console.error(err);
-                res.status(400).send(
+                res.json(
                     {
-                        "res": err
+                        "code": 200,
+                        "success": false,
+                        "message": err
                     }
                 );
             })
@@ -113,25 +136,40 @@ function start(app, data, writeLog) {
     });
     app.get("/api/partisipan/cek", function(req, res) {
         let param = req.query;
+        let filter = {};
         if(param.email) {
-            data.partisipan.find(
+            filter.email = param.email
+        } else if(param.no) {
+            filter.no = param.no
+        } else {
+            res.json(
                 {
-                    "email": param.email
+                    "code": 200,
+                    "success": false,
+                    "message": "Missing parameter"
                 }
+            );
+        }
+        if(Object.keys(filter).length > 0) {
+            data.partisipan.find(
+                filter
             ).toArray().then(result => {
-                res.json(result);
+                res.json({
+                    "code": 200,
+                    "success": true,
+                    "message": "ok",
+                    "data": result[0]
+                });
                 writeLog("Partisipan", "GET", param.nama);
             }).catch(err => {
                 console.error(err);
-                res.status(400).send(
+                res.json(
                     {
-                        "res": err
+                        "code": 200,
+                        "success": false,
+                        "message": err
                     }
                 );
-            });
-        } else {
-            res.json({
-                "res": "Missing parameter"
             });
         }
     });
@@ -160,7 +198,9 @@ function start(app, data, writeLog) {
             }
         } else {
             res.json({
-                "res": "Missing parameter"
+                "code": 400,
+                "success": false,
+                "message": "Missing parameter"
             });
         }
         if(Object.keys(filter).length > 0) {
@@ -192,31 +232,31 @@ function start(app, data, writeLog) {
                         writeLog("Partisipan", "PUT", result.value);
                         res.json(
                             {
-                                "res": "success",
+                                "code": 200,
+                                "success": true,
+                                "message": "ok",
                                 "data": result.value
                             }
                         )
                     } else {
-                        res.status(400).send(
+                        res.json(
                             {
-                                "res": "Not found"
+                                "code": 200,
+                                "success": false,
+                                "message": "Not found"
                             }
-                        )
+                        );
                     }
                 }).catch(err => {
                     console.error(err);
-                    res.status(400).send(
+                    res.json(
                         {
-                            "res": err
+                            "code": 200,
+                            "success": false,
+                            "message": err
                         }
                     );
                 })
-            } else {
-                res.json(
-                    {
-                        "res": "missing new data"
-                    }
-                )
             }
         }
     });
@@ -238,31 +278,42 @@ function start(app, data, writeLog) {
                 "no": param.no
             }
         } else {
-            res.json({
-                "res": "Missing parameter"
-            });
+            res.status(400).send(
+                {
+                    "code": 400,
+                    "success": false,
+                    "message": "Missing parameter"
+                }
+            );
         }
         if(Object.keys(filter).length > 0) {
-            data.partisipan.deleteOne(filter).then(result => {
-                if(result.deletedCount == 0) {
+            data.partisipan.findOneAndDelete(filter).then(result => {
+                if(result.value == null) {
                     res.status(400).send(
                         {
-                            "res": "not found"
+                            "code": 200,
+                            "success": false,
+                            "message": "Not found"
                         }
-                    )
+                    );
                 } else {
                     res.json(
                         {
-                            "res": "success"
+                            "code": 200,
+                            "success": true,
+                            "message": "ok",
+                            "data": result.value
                         }
-                    )
-                    writeLog("Partisipan", "DELETE", filter);
+                    );
+                    writeLog("Partisipan", "DELETE", result.value);
                 }
             }).catch(err => {
                 console.error(err);
                 res.status(400).send(
                     {
-                        "res": err
+                        "code": 200,
+                        "success": false,
+                        "message": err
                     }
                 );
             })

@@ -53,7 +53,7 @@ let logger =  function(collection, method, data = "") {
                 msg = "Delete data\n";
                 break;
             default:
-                break;
+                msg = method;
         }
         console.log("[" + collection + "]" + "[" + method + "] " + msg);
         if(data != "")
@@ -87,7 +87,6 @@ MongoClient.connect(database.url, {
             "unique": true
         }
     );
-
     //START SERVER
     app.listen(app.get('port'), function() {
         console.log('[SERVER] Server started at port ' + app.get('port'));

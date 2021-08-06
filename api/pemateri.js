@@ -19,7 +19,7 @@ function start(app, data, writeLog) {
     /**** CREATE ****/
     /*
     */
-    app.post("/api/pemateri", function(req, res, writeLog) {
+    app.post("/api/pemateri", function(req, res) {
         let param = req.body;
         if(param.nama) {
             let orang = {
@@ -30,24 +30,31 @@ function start(app, data, writeLog) {
             data.pemateri.insertOne(
                 orang
             ).then(result => {
+                orang["_id"] = result.insertedId;
                 res.send(
                     {
-                        "res": "success",
-                        "_id": result.insertedId
+                        "code": 200,
+                        "success": true,
+                        "message": "ok",
+                        "data": orang
                     }
                 );
                 writeLog("Pemateri", "POST", orang);
             }).catch(err => {
                 console.error(err);
-                res.status(400).send(
+                res.json(
                     {
-                        "res": err
+                        "code": 200,
+                        "success": false,
+                        "message": err
                     }
                 );
             })
         } else {
-            res.json({
-                "res": "Missing parameter"
+            res.status(400).send({
+                "code": 400,
+                "success": false,
+                "message": "Missing parameter"
             });
         }
     });
@@ -74,13 +81,22 @@ function start(app, data, writeLog) {
                 if(parseInt(param.count) > 0 && parseInt(param.count) != NaN) {
                     result = result.slice(0, param.count);
                 }
-                res.json(result);
+                res.json(
+                    {
+                        "code": 200,
+                        "success": true,
+                        "message": "ok",
+                        "data": result
+                    }
+                )
                 writeLog("Pemateri", "GET", param.nama);
             }).catch(err => {
                 console.error(err);
-                res.status(400).send(
+                res.json(
                     {
-                        "res": err
+                        "code": 200,
+                        "success": false,
+                        "message": err
                     }
                 );
             });
@@ -92,13 +108,22 @@ function start(app, data, writeLog) {
                 if(parseInt(param.count) > 0 && parseInt(param.count) != NaN) {
                     result = result.slice(0, param.count);
                 }
-                res.json(result);
+                res.json(
+                    {
+                        "code": 200,
+                        "success": true,
+                        "message": "ok",
+                        "data": result
+                    }
+                )
                 writeLog("Pemateri", "GET", param.nama);
             }).catch(err => {
                 console.error(err);
-                res.status(400).send(
+                res.json(
                     {
-                        "res": err
+                        "code": 200,
+                        "success": false,
+                        "message": err
                     }
                 );
             })
@@ -142,34 +167,48 @@ function start(app, data, writeLog) {
                         writeLog("Pemateri", "PUT", result.value);
                         res.json(
                             {
-                                "res": "success",
+                                "code": 200,
+                                "success": true,
+                                "message": "ok",
                                 "data": result.value
                             }
                         )
                     } else {
-                        res.status(400).send(
+                        res.json(
                             {
-                                "res": "Not found"
+                                "code": 200,
+                                "success": false,
+                                "message": "Not found"
                             }
                         )
                     }
                 }).catch(err => {
                     console.error(err);
-                    res.status(400).send(
+                    res.json(
                         {
-                            "res": err
+                            "code": 400,
+                            "success": false,
+                            "message": err
                         }
                     );
                 })
             } else {
                 res.status(400).send(
                     {
-                        "res": "missing new data"
+                        "code": 400,
+                        "success": false,
+                        "message": "Missing new data"
                     }
                 )
             }
         } else {
-            res.json({});
+            res.status(400).send(
+                {
+                    "code": 400,
+                    "success": false,
+                    "message": "Missing parameter"
+                }
+            )
         }
     });
 
@@ -182,63 +221,81 @@ function start(app, data, writeLog) {
     app.delete("/api/pemateri", function(req, res) {
         let param = req.body;
         if(param.id) {
-            data.pemateri.deleteOne(
+            data.pemateri.findOneAndDelete(
                 {
                     "_id": new mongodb.ObjectId(param.id)
                 }
             ).then(result => {
-                if(result.deletedCount == 0) {
-                    res.status(400).send(
+                if(result.value == null) {
+                    res.json(
                         {
-                            "res": "ID not found"
+                            "code": 200,
+                            "success": false,
+                            "message": "ID not found"
                         }
                     )
                 } else {
                     res.json(
                         {
-                            "res": "success"
+                            "code": 200,
+                            "success": true,
+                            "message": "ok",
+                            "data": result.value
                         }
                     )
-                    writeLog("Pemateri", "DELETE", param.id);
+                    writeLog("Pemateri", "DELETE", result.value);
                 }
             }).catch(err => {
                 console.error(err);
-                res.status(400).send(
+                res.json(
                     {
-                        "res": err
+                        "code": 200,
+                        "success": false,
+                        "message": err
                     }
                 );
             })
         } else if(param.nama) {
-            data.pemateri.deleteOne(
+            data.pemateri.findOneAndDelete(
                 {
                     "nama": param.nama
                 }
             ).then(result => {
-                if(result.deletedCount == 0) {
-                    res.status(400).send(
+                if(result.value == null) {
+                    res.json(
                         {
-                            "res": "Nama not found"
+                            "code": 200,
+                            "success": false,
+                            "message": "Nama not found"
                         }
                     )
                 } else {
                     res.json(
                         {
-                            "res": "success"
+                            "code": 200,
+                            "success": true,
+                            "message": "ok",
+                            "data": result.value
                         }
                     )
                 }
-                writeLog("Pemateri", "DELETE", param.nama);
+                writeLog("Pemateri", "DELETE", result.value);
             }).catch(err => {
                 console.error(err);
-                res.status(400).send(
+                res.json(
                     {
-                        "res": err
+                        "code": 200,
+                        "success": false,
+                        "message": err
                     }
                 );
             })
         } else {
-            res.json({});
+            res.json({
+                "code": 400,
+                "success": false,
+                "message": "Missing parameter"
+            });
         }
     });
 }
