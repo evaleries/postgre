@@ -8,10 +8,6 @@
 - [ ] Partisipan Send Email
 - [ ] Better log
 # Documentation
-Reminder
-GET Requests always return an array instead of json.
-
-
 All of return has 3 keys:
 ```
 code
@@ -39,7 +35,14 @@ Example:
 ```
 Result
 ```
-[{"_id":"610a22356a1344b60bd6e1fc","nama":"Nakiri Ayame","desc":"FAMS","foto":""},{"_id":"610984edbe9aacdacace9566","nama":"Riezqu Ibnanta","desc":"","foto":""}]
+{
+    "code":200,
+    "success":true,
+    "message":"ok",
+    "data":[
+        {"_id":"610984edbe9aacdacace9566","nama":"Riezqu Ibnanta"},{"_id":"610a1da78115519ffc6f1234","nama":"Towa","desc":"Hololive 4th gen","foto":""},{"_id":"610caf3fd5e6708563e2e309","nama":"BABYMETAL","desc":"","foto":""},{"_id":"610caf68b83ca162a59c1243","nama":"CY8ER","desc":"","foto":""},{"_id":"610caf8a1873c917c81f4644","nama":"CY8ER","desc":"","foto":""},{"_id":"610cafa415aa3cec5094cb03","nama":"CY8ER","desc":"","foto":""}
+        ]
+}
 ```
 ### POST
 #### Params
@@ -128,7 +131,14 @@ Result
 ### GET
 Result
 ```
-[{"_id":"610a37245ded2ec5425c34ba","nama":"Minato Yukina","email":"yukina@roselia.jp","no":"080808","asal":"Bandori","info":"Song I am."},{"_id":"610a48504ae2bc3c9898bd3b","nama":"Mostima","email":"mostima@arknights.jp","no":"01234","asal":"Laterano","info":"laterano"}]
+{
+    "code":200,
+    "success":true,
+    "message":"ok",
+    "data":[
+        {"_id":"610a37245ded2ec5425c34ba","nama":"Minato Yukina","email":"yukina@roselia.jp","no":"080808","asal":"Bandori","info":"Song I am."}
+        ]
+}
 ```
 ## /api/partisipan/cek
 ### GET
@@ -185,7 +195,7 @@ Result
 ```
 {
     "code":200,
-    "success":false,
+    "success":true,
     "message":"ok",
     "data":{
         "nama":"nameless",

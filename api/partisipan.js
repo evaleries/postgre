@@ -37,7 +37,7 @@ function start(app, data, writeLog) {
                 res.send(
                     {
                         "code": 200,
-                        "success": false,
+                        "success": true,
                         "message": "ok",
                         "data": orang
                     }
@@ -98,7 +98,7 @@ function start(app, data, writeLog) {
             data.partisipan.find(filter).toArray().then(result => {
                 res.json({
                     "code": 200,
-                    "success": false,
+                    "success": true,
                     "message": "ok",
                     "data": result
                 });
@@ -117,7 +117,7 @@ function start(app, data, writeLog) {
             data.partisipan.find().toArray().then(result => {
                 res.json({
                     "code": 200,
-                    "success": false,
+                    "success": true,
                     "message": "ok",
                     "data": result
                 });
