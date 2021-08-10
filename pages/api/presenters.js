@@ -9,6 +9,16 @@ let result = {
 
 const tableName = "presenters"
 
+function shuffle(arr) {
+    let i = arr.length, rng;
+    while(0 !== i) {
+        rng = Math.floor(Math.random() * i);
+        i--;
+        [arr[i], arr[rng]] = [arr[rng], arr[i]]
+    }
+    return arr
+}
+
 async function getPemateri(filter) {
     const user = supabase.auth.user()
     let res;
@@ -82,6 +92,10 @@ export default async function pemateri(req, res) {
                 result.data = await getPemateri(query)
             else 
                 result.data = await getPemateri()
+            if(query.random == "1")
+                result.data = shuffle(result.data)
+            if(parseInt(query.count) != NaN)
+                result.data = result.data.slice(0, query.count)
             break
         case "PUT":
             if(body.id) {
