@@ -7,7 +7,7 @@ let result = {
     "data": []
 }
 
-const tableName = "partisipan"
+const tableName = "users"
 
 async function getPartisipan(filter) {
     const user = supabase.auth.user()
@@ -17,10 +17,10 @@ async function getPartisipan(filter) {
             res = await supabase.from(tableName).select("*").eq("id", parseInt(filter.id))
         } else if(filter.email) {
             res = await supabase.from(tableName).select("*").eq("email", filter.email)
-        } else if(filter.no) {
-            res = await supabase.from(tableName).select("*").eq("no", filter.no)
-        } else if(filter.name) {
-            res = await supabase.from(tableName).select("*").ilike("name", `%${filter.name}%`);
+        } else if(filter.whatsapp) {
+            res = await supabase.from(tableName).select("*").eq("whatsapp", filter.whatsapp)
+        } else if(filter.nama) {
+            res = await supabase.from(tableName).select("*").ilike("nama", `%${filter.nama}%`);
         }
     } else {
         res = await supabase.from(tableName).select("*");
@@ -30,9 +30,9 @@ async function getPartisipan(filter) {
     return res.body;
 }
 
-async function insertPartisipan(name, email, no, from, info) {
+async function insertPartisipan(nama, email, whatsapp, asal, info) {
     const res = await supabase.from(tableName).insert([
-        {name: name, email: email, no: no, from: from, info:info}
+        {nama: nama, email: email, whatsapp: whatsapp, asal: asal, info:info}
     ])
     if(res.error)
         throw res.error;
@@ -49,10 +49,10 @@ async function updatePartisipan(filter, newData) {
         filter = {id: filter.id}
     if(filter.email)
         filter = {email: filter.email}
-    if(filter.no)
-        filter = {no: filter.no}
-    if(filter.name)
-        filter = {name: filter.name}
+    if(filter.whatsapp)
+        filter = {whatsapp: filter.whatsapp}
+    if(filter.nama)
+        filter = {nama: filter.nama}
     const res = await supabase.from(tableName).update(
         newData
     ).match(
@@ -69,8 +69,8 @@ async function deletePartisipan(filter) {
         res = await supabase.from(tableName).delete().eq("id", parseInt(filter.id))
     } else if(filter.email) {
         res = await supabase.from(tableName).delete().eq("email", filter.email)
-    } else if(filter.no) {
-        res = await supabase.from(tableName).delete().eq("no", filter.no)
+    } else if(filter.whatsapp) {
+        res = await supabase.from(tableName).delete().eq("whatsapp", filter.whatsapp)
     }
     if(res.error)
         throw res.error
@@ -86,8 +86,8 @@ export default async function partisipan(req, res) {
     } = req;
     switch(method) {
         case "POST":
-            if(body.name && body.email && body.no && body.from && body.info) {
-                result.data = await insertPartisipan(body.name, body.email, body.no, body.from, body.info);
+            if(body.nama && body.email && body.whatsapp && body.asal && body.info) {
+                result.data = await insertPartisipan(body.nama, body.email, body.whatsapp, body.asal, body.info);
             } else {
                 result.status = 400;
                 result.success = false;
@@ -95,17 +95,17 @@ export default async function partisipan(req, res) {
             }
             break
         case "GET":
-            if(query.id || query.email || query.no || query.name)
+            if(query.id || query.email || query.whatsapp || query.nama)
                 result.data = await getPartisipan(query)
             else 
                 result.data = await getPartisipan()
             break
         case "PUT":
-            if(body.id || body.email || body.no) {
+            if(body.id || body.email || body.whatsapp) {
                 let newData = {
-                    name: body.newname,
+                    nama: body.newnama,
                     email: body.newemail,
-                    no: body.newno,
+                    whatsapp: body.newwhatsapp,
                     from: body.newfrom,
                     info: body.newinfo
                 }
@@ -117,7 +117,7 @@ export default async function partisipan(req, res) {
             }
             break
         case "DELETE":
-            if(body.id || body.email || body.no) {
+            if(body.id || body.email || body.whatsapp) {
                 result.data = await deletePartisipan(body)
             }  else {
                 result.status = 400;

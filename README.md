@@ -39,7 +39,7 @@ For inserting presneters with photo (multiform data).
 #### POST
 | Parameters    | Desc                      |
 | ------------- | ------------------------- |
-| name          | Name of presenter         |
+| nama          | Name of presenter         |
 | photo         | Photo of presenter (file) |
 | desc          | Description of presenter  |
 ## /api/users
@@ -47,30 +47,30 @@ For inserting presneters with photo (multiform data).
 #### POST
 | Parameters    | Desc                        |
 | ------------- | --------------------------- |
-| name          | Name of user                |
+| nama          | Name of user                |
 | email         | Email of user               |
-| no            | Phone of user               |
-| from          | Origin of user              |
+| whatsapp      | Phone of user               |
+| asal          | Origin of user              |
 | info          | Where the user got the info |
 #### PUT
 Choose one
 | Parameters    | Desc                        |
 | ------------- | --------------------------- |
-| name          | Name of user                |
+| nama          | Name of user                |
 | email         | Email of user               |
-| no            | Phone of user               |
+| whatsapp      | Phone of user               |
 ##### new data
 | Parameters       | Desc                        |
 | -------------    | --------------------------- |
-| newname          | Name of user                |
+| newnama          | Name of user                |
 | newemail         | Email of user               |
-| newno            | Phone of user               |
-| newfrom          | Origin of user              |
+| newwhatsapp      | Phone of user               |
+| newasal          | Origin of user              |
 | newinfo          | Where the user got the info |
 #### Delete
 Choose one
 | Parameters    | Desc                        |
 | ------------- | --------------------------- |
-| name          | Name of user                |
+| nama          | Name of user                |
 | email         | Email of user               |
-| no            | Phone of user               |
+| whatsapp      | Phone of user               |
