@@ -1,58 +1,133 @@
+import { supabase } from '../../../utils/supabase';
 import multer from 'multer'
-import axios from 'axios';
+import fs from 'fs'
+
+//we need to disable bodyPraser in order uploading file, hence we need seperate post url
 export const config = {
     api: {
-      bodyParser: false
+        bodyParser: false
     }
-  };
+};
 
-let dest = "public/assets/presenters";
+const tableName = "presenters"
+
+const dest = "public/assets/presenters";
 
 const up = multer({
     storage: multer.diskStorage({
         destination: function(req, file, cb) {
-            cb(null, dest);
-          },
-      filename: (req, file, cb) => cb(null, file.originalname),
-    }),
-  });
+            cb(null, dest)
+        },
+        filename: (req, file, cb) => cb(null, file.originalname)
+    })
+})
+
+function deleteP(file) {
+    try {
+        fs.unlinkSync(dest + "/" + file)
+    } catch (error) {
+        console.error(error)
+    }
+}
 
 export default async function upload(req, res) {
     const {
-        query,
         body,
-        method,
+        method
     } = req;
     switch(method) {
         case "POST":
-            up.single("photo")(req, {}, err => {
-               // console.log(req.file); // do something with the file
-                req.body = JSON.parse(JSON.stringify(req.body));
-        
-                axios({
-                    method: "POST",
-                    url: "http://localhost:3000/api/presenters",
-                    headers: {}, 
-                    data: {
-                      name: req.body.name,
-                      desc: req.body.desc,
-                      photo: "/assets/presenters/" + req.file.filename,
+            up.single("photo")(req, {}, async function(err) {
+                try {
+                    req.body = JSON.parse(JSON.stringify(req.body))
+                } catch (error) {
+                    res.status(400).send({
+                        "status": 400,
+                        "success": false,
+                        "message": "Invalid JSON",
+                        "data": []
+                    });
+                    deleteP(req.file.filename)
+                    return;
+                }
+                //cek param, desc is ok to be null
+                if(req.body.name) {
+                    const _res = await supabase.from(tableName).insert([
+                        {name: req.body.name, photo: "/assets/presenters/" + req.file.filename, desc: req.body.desc}
+                    ])
+                    if(_res.error) {
+                        console.error(_res.error);
+                        deleteP(req.file.filename)
+                        res.status(400).send({
+                            "status": 400,
+                            "success": false,
+                            "message": "An error occured",
+                            "data": []
+                        });
                     }
-                  }).then(resc => {
-                      res.send(resc.data);
-                  })
-                })
-            break
-        case "PUT":
-          up.single("photo")(req, {}, err => {
-            //req.body = JSON.parse(JSON.stringify(req.body));
-            console.log(req)
-            console.log(req.body)
-            res.send('wewe')
-          });
-          break
+                    res.status(200).send({
+                        "status": 200,
+                        "success": true,
+                        "message": "ok",
+                        "data": _res.body
+                    })
+                } else {
+                    deleteP(req.file.filename)
+                    res.status(400).send({
+                        "status": 400,
+                        "success": false,
+                        "message": "Invalid Parameter",
+                        "data": []
+                    });
+                }
+            })
+            /*
+            up.single("photo")(req, {}, err => {
+                try {
+                    req.body = JSON.stringify(req.body)
+                } catch (error) {
+                    res.status(400).send({
+                        "status": 400,
+                        "success": false,
+                        "message": "Invalid JSON",
+                        "data": []
+                    });
+                    deleteP(req.file.filename)
+                    return;
+                }
+                //cek param, desc is ok to be null
+                if(req.body.name) {
+                    const _res = await supabase.from(tableName).insert([
+                        {name: req.body.name, photo: "/assets/presenters/" + req.file.filename, desc: req.body.desc}
+                    ])
+                    if(_res.error) {
+                        console.error(_res.error);
+                        deleteP(req.file.filename)
+                    }
+                    res.status(200).send({
+                        "status": 200,
+                        "success": true,
+                        "message": "ok",
+                        "data": _res.body
+                    })
+                } else {
+                    deleteP(req.file.filename)
+                    res.status(400).send({
+                        "status": 400,
+                        "success": false,
+                        "message": "An error occured",
+                        "data": []
+                    });
+                }
+            })
+            */
+            break;
         default:
-            res.status(400).send("no")
-            break
+            res.status(405).send({
+                "status": 405,
+                "success": false,
+                "message": `Method ${method} not allowed`,
+                "data": []
+            })
     }
 }

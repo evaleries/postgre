@@ -29,6 +29,19 @@ NEXT_PUBLIC_SUPABASE_ANON_KEY=your anon key
 | Parameters    | Desc                                |
 | ------------- | ----------------------------------- |
 | id            | ID of presenter                     |
+## /api/presenters/upload
+For inserting presneters with photo (multiform data).
+
+ See /presenters/upload for example.
+ 
+ Photos of presenters are located in public/assets/presenters/
+### Params
+#### POST
+| Parameters    | Desc                      |
+| ------------- | ------------------------- |
+| name          | Name of presenter         |
+| photo         | Photo of presenter (file) |
+| desc          | Description of presenter  |
 ## /api/users
 ### Params
 #### POST
