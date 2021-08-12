@@ -5,7 +5,7 @@ NEXT_PUBLIC_SUPABASE_URL=your supabase url
 NEXT_PUBLIC_SUPABASE_ANON_KEY=your anon key
 ```
 ## ERD
-![ERD](https://github.com/Pemrograman-Fasilkom-Unej/postgre/tree/back-end/docs/db.png)
+![ERD](https://raw.githubusercontent.com/Pemrograman-Fasilkom-Unej/postgre/back-end/docs/db.png)
 ## to do
 - [ ] Auth
 - [ ] SMTP
