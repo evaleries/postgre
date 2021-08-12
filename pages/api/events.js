@@ -9,6 +9,79 @@ let result = {
 
 const tableName = "events"
 
+async function getEvents(filter) {
+    let res = await supabase.from(tableName).select(`
+    id,
+    title,
+    presenters (
+        name
+    ),
+    date,
+    open_date
+    `)
+    if(filter) {
+        if(filter.id) {
+            res = await supabase.from(tableName).select(`
+            id,
+            title,
+            presenters (
+                name
+            ),
+            date,
+            open_date
+            `).eq("id", parseInt(filter.id))
+        } else if(filter.year) {
+            for(var i=0;i<res.body.length;i++) {
+                if(res.body[i].date.split('-')[0] != filter.year)
+                    res.body.splice(i, 1)
+            }
+        }
+        if(filter.presenter) {
+            for(var i=0;i<res.body.length;i++) {
+                if(res.body[i].presenters.name.toLowerCase().indexOf(filter.presenter.toLowerCase()) == -1)
+                    res.body.splice(i, 1)
+            }
+        }
+    }
+    if(res.error)
+        throw res.error
+    return res.body
+}
+
+async function insertEvents(id_presenter, title, date, open_date) {
+    const res = await supabase.from(tableName).insert([
+        {id_presenter: id_presenter, title:title, date:date, open_date: open_date}
+    ])
+    if(res.error)
+        throw res.error;
+    return res.body;
+}
+
+async function updateEvents(filter, newData) {
+    const oldData = await getEvents(filter)
+    for(var k in newData) {
+        if(newData[k] == null || newData[k] == undefined)
+            newData[k] = oldData[k]
+    }
+    if(filter.id)
+        filter = {id: filter.id}
+    const res = await supabase.from(tableName).update(
+        newData
+    ).match(
+        filter
+    )
+    if(res.error)
+        throw res.error
+    return res.body
+}
+
+async function deleteEvents(id) {
+    const res = await supabase.from(tableName).delete().eq("id", parseInt(id))
+    if(res.error)
+        throw res.error
+    return res.body
+}
+
 export default async function events(req, res) {
     //body = post, query = ? url
     const {
@@ -18,8 +91,8 @@ export default async function events(req, res) {
     } = req;
     switch(method) {
         case "POST":
-            if(body.name) {
-                result.data = await insertPemateri(body.name, body.photo, body.desc);
+            if(body.id_presenter && body.title && body.date && body.open_date) {
+                result.data = await insertEvents(body.id_presenter, body.title, body.date, body.open_date)
             } else {
                 result.status = 400;
                 result.success = false;
@@ -27,19 +100,17 @@ export default async function events(req, res) {
             }
             break
         case "GET":
-            if(query.id || query.name)
-                result.data = await getPemateri(query)
-            else 
-                result.data = await getPemateri()
+            result.data = query.year || query.presenter ? await getEvents(query) : await getEvents()
             break
         case "PUT":
             if(body.id) {
                 let newData = {
-                    name: body.name,
-                    photo: body.photo,
-                    desc: body.desc
+                    id_presenter: body.id_presenter,
+                    title: body.title,
+                    date: body.date,
+                    open_date: body.open_date
                 }
-                result.data = await updatePemateri(body, newData);
+                result.data = await updateEvents(body, newData)
             } else {
                 result.status = 400;
                 result.success = false;
@@ -48,7 +119,7 @@ export default async function events(req, res) {
             break
         case "DELETE":
             if(body.id) {
-                result.data = await deletePemateri(body.id)
+                result.data = await deleteEvents(body.id)
             }  else {
                 result.status = 400;
                 result.success = false;

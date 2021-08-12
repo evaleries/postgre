@@ -21,6 +21,23 @@ async function getPartisipan(filter) {
             res = await supabase.from(tableName).select("*").eq("whatsapp", filter.whatsapp)
         } else if(filter.nama) {
             res = await supabase.from(tableName).select("*").ilike("nama", `%${filter.nama}%`);
+        } else if(filter.id_event) {
+            res = await supabase.from(tableName).select(`
+            id,
+            nama,
+            email,
+            whatsapp,
+            asal,
+            info,
+            id_event,
+            events (
+                id
+            )
+            `).eq("events.id", parseInt(filter.id_event))
+            for(var i=0;i<res.body.length;i++) {
+                if(res.body[i].events == null)
+                    res.body.splice(i, 1)
+            }
         }
     } else {
         res = await supabase.from(tableName).select("*");
@@ -30,9 +47,25 @@ async function getPartisipan(filter) {
     return res.body;
 }
 
-async function insertPartisipan(nama, email, whatsapp, asal, info) {
+async function insertPartisipan(nama, email, whatsapp, asal, info, id_event) {
+    //prevent register_date > event_date
+    const events = await supabase.from("events").select("*").eq("id", parseInt(id_event))
+    let date_event = new Date(events.body[0].date)
+    date_event.setHours(0, 0, -1) //set ke h-1 23.59 pendaftaran
+    if(new Date() > date_event) {
+        return -1
+    }
+    //cek email, and id same
+    let p = await supabase.from("users").select("*").eq("email", email).eq("id_event", id_event)
+    if(p.body.length > 0) {
+        return -2
+    }
+    p = await supabase.from("users").select("*").eq("whatsapp", whatsapp).eq("id_event", id_event)
+    if(p.body.length > 0) {
+        return -3
+    }
     const res = await supabase.from(tableName).insert([
-        {nama: nama, email: email, whatsapp: whatsapp, asal: asal, info:info}
+        {nama: nama, email: email, whatsapp: whatsapp, asal: asal, info:info, id_event: id_event}
     ])
     if(res.error)
         throw res.error;
@@ -86,8 +119,23 @@ export default async function partisipan(req, res) {
     } = req;
     switch(method) {
         case "POST":
-            if(body.nama && body.email && body.whatsapp && body.asal && body.info) {
-                result.data = await insertPartisipan(body.nama, body.email, body.whatsapp, body.asal, body.info);
+            if(body.nama && body.email && body.whatsapp && body.asal && body.info && body.id_event) {
+                result.data = await insertPartisipan(body.nama, body.email, body.whatsapp, body.asal, body.info, body.id_event);
+                if(result.data == -1) {
+                    result.success = false;
+                    result.message = "Kelewat tanggal"
+                    result.data = []
+                }
+                else if(result.data == -2) {
+                    result.success = false;
+                    result.message = "Email sudah terdaftar"
+                    result.data = []
+                }
+                else if(result.data == -3) {
+                    result.success = false;
+                    result.message = "Nomor sudah terdaftar"
+                    result.data = []
+                }
             } else {
                 result.status = 400;
                 result.success = false;
@@ -95,7 +143,7 @@ export default async function partisipan(req, res) {
             }
             break
         case "GET":
-            if(query.id || query.email || query.whatsapp || query.nama)
+            if(query.id || query.email || query.whatsapp || query.nama || query.id_event)
                 result.data = await getPartisipan(query)
             else 
                 result.data = await getPartisipan()

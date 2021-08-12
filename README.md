@@ -4,10 +4,9 @@ Uses supabase. Configure .env.local first.
 NEXT_PUBLIC_SUPABASE_URL=your supabase url
 NEXT_PUBLIC_SUPABASE_ANON_KEY=your anon key
 ```
+## ERD
+![ERD](https://github.com/Pemrograman-Fasilkom-Unej/postgre/tree/back-end/docs/db.png)
 ## to do
-- [ ] ERD
-- [ ] Events
-- [ ] Docs
 - [ ] Auth
 - [ ] SMTP
 ## /api/presenters
@@ -44,6 +43,13 @@ For inserting presneters with photo (multiform data).
 | desc          | Description of presenter  |
 ## /api/users
 ### Params
+#### GET
+| Parameters    | Desc                        |
+| ------------- | --------------------------- |
+| email         | Filter by email             |
+| whatsapp      | Filter by whatsapp          |
+| nama          | Filter by nama              |
+| id_event      | Filter by id_event          |
 #### POST
 | Parameters    | Desc                        |
 | ------------- | --------------------------- |
@@ -74,3 +80,59 @@ Choose one
 | nama          | Name of user                |
 | email         | Email of user               |
 | whatsapp      | Phone of user               |
+
+## /api/events
+### Params
+#### GET
+| Parameters    | Desc                        |
+| ------------- | --------------------------- |
+| year          | Filter by year              |
+| presenter     | Filter by presenter         |
+#### POST
+| Parameters    | Desc                        |
+| ------------- | --------------------------- |
+| id_presenter  | ID of presenter             |
+| title         | Title                       |
+| date          | Event date                  |
+| open_date     | Open Registration Date      |
+#### PUT
+| Parameters    | Desc                        |
+| ------------- | --------------------------- |
+| id            | ID of event                 |
+| id_presenter  | ID of presenter             |
+| title         | Title                       |
+| date          | Event date                  |
+| open_date     | Open Registration Date      |
+#### DELETE
+| Parameters    | Desc                        |
+| ------------- | --------------------------- |
+| id            | ID of event                 |
+
+## /api/docs
+### Params
+#### GET
+| Parameters    | Desc                        |
+| ------------- | --------------------------- |
+| year          | Filter by year              |
+| title         | Filter by title             |
+#### POST
+| Parameters    | Desc                        |
+| ------------- | --------------------------- |
+| id_event      | ID of event                 |
+| photo         | Photo                       |
+#### PUT
+| Parameters    | Desc                        |
+| ------------- | --------------------------- |
+| id            | ID of documentation         |
+| photo         | Photo                       |
+#### DELETE
+| Parameters    | Desc                        |
+| ------------- | --------------------------- |
+| id            | ID of documentation         |
+
+## /api/docs/upload
+For inserting docs with photo (multiform data).
+
+ See /docs/upload for example.
+ 
+ Photos of docs are located in public/assets/docs/
