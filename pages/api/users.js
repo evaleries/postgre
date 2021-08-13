@@ -11,17 +11,45 @@ const tableName = "users"
 
 async function getPartisipan(filter) {
     const user = supabase.auth.user()
-    let res;
+    let res = await supabase.from(tableName).select(`
+    id,
+    nama,
+    email,
+    whatsapp,
+    asal,
+    info,
+    id_event,
+    events (
+        id
+    )
+    `)
     if(filter) {
+        //pake if, loop 1 1 biar bisa apply multifilter
         if(filter.id) {
-            res = await supabase.from(tableName).select("*").eq("id", parseInt(filter.id))
-        } else if(filter.email) {
-            res = await supabase.from(tableName).select("*").eq("email", filter.email)
-        } else if(filter.whatsapp) {
-            res = await supabase.from(tableName).select("*").eq("whatsapp", filter.whatsapp)
-        } else if(filter.nama) {
-            res = await supabase.from(tableName).select("*").ilike("nama", `%${filter.nama}%`);
-        } else if(filter.id_event) {
+            for(var i=0;i<res.body.length;i++) {
+                if(res.body[i].id != filter.id)
+                    res.body.splice(i, 1)
+            }
+        } 
+        if(filter.email) {
+            for(var i=0;i<res.body.length;i++) {
+                if(res.body[i].email != filter.email)
+                    res.body.splice(i, 1)
+            }
+        } 
+        if(filter.whatsapp) {
+            for(var i=0;i<res.body.length;i++) {
+                if(res.body[i].whatsapp != filter.whatsapp)
+                    res.body.splice(i, 1)
+            }
+        } 
+        if(filter.nama) {
+            for(var i=0;i<res.body.length;i++) {
+                if(res.body[i].nama.toLowerCase().indexOf(filter.nama.toLowerCase()) == -1)
+                    res.body.splice(i, 1)
+            }
+        } 
+        if(filter.id_event) {
             res = await supabase.from(tableName).select(`
             id,
             nama,
@@ -39,8 +67,6 @@ async function getPartisipan(filter) {
                     res.body.splice(i, 1)
             }
         }
-    } else {
-        res = await supabase.from(tableName).select("*");
     }
     if(res.error)
         throw res.error;
@@ -51,7 +77,12 @@ async function insertPartisipan(nama, email, whatsapp, asal, info, id_event) {
     //prevent register_date > event_date
     const events = await supabase.from("events").select("*").eq("id", parseInt(id_event))
     let date_event = new Date(events.body[0].date)
+    let open_date = new Date(events.body[0].open_date)
     date_event.setHours(0, 0, -1) //set ke h-1 23.59 pendaftaran
+    open_date.setHours(0) // set ke 00.00
+    if(new Date() < open_date) {
+        return 0;
+    }
     if(new Date() > date_event) {
         return -1
     }
@@ -121,7 +152,12 @@ export default async function partisipan(req, res) {
         case "POST":
             if(body.nama && body.email && body.whatsapp && body.asal && body.info && body.id_event) {
                 result.data = await insertPartisipan(body.nama, body.email, body.whatsapp, body.asal, body.info, body.id_event);
-                if(result.data == -1) {
+                if(result.data == 0) {
+                    result.success = false;
+                    result.message = "Belum buka"
+                    result.data = []
+                }
+                else if(result.data == -1) {
                     result.success = false;
                     result.message = "Kelewat tanggal"
                     result.data = []
