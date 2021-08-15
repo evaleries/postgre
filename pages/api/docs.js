@@ -23,6 +23,7 @@ async function getDocs(filter) {
             res = await supabase.from(tableName).select(`
             id,
             photo,
+            desc,
             events (
                 title,
                 date
@@ -33,6 +34,7 @@ async function getDocs(filter) {
             res = await supabase.from(tableName).select(`
             id,
             photo,
+            desc,
             events (
                 title,
                 date
@@ -51,6 +53,7 @@ async function getDocs(filter) {
             res = await supabase.from(tableName).select(`
             id,
             photo,
+            desc,
             events (
                 title,
                 date
@@ -65,6 +68,7 @@ async function getDocs(filter) {
         res = await supabase.from(tableName).select(`
         id,
         photo,
+        desc,
         events (
             title,
             date
@@ -76,9 +80,9 @@ async function getDocs(filter) {
     return res.body
 }
 
-async function insertDocs(id_event, photo) {
+async function insertDocs(id_event, desc, photo) {
     const res = await supabase.from(tableName).insert([
-        {id_event: id_event, photo:photo}
+        {id_event: id_event, desc:desc, photo:photo}
     ])
     if(res.error)
         throw res.error;
@@ -118,8 +122,8 @@ export default async function docs(req, res) {
     } = req;
     switch(method) {
         case "POST":
-            if(body.id_event && body.id_photo) {
-                result.data = await insertDocs(body.id_event, body.photo)
+            if(body.id_event && body.id_photo && body.desc) {
+                result.data = await insertDocs(body.id_event, body.desc, body.photo)
             } else {
                 result.status = 400;
                 result.success = false;
@@ -133,6 +137,7 @@ export default async function docs(req, res) {
             if(body.id) {
                 let newData = {
                     id_event: body.id_event,
+                    desc: body.desc,
                     photo: body.photo
                 }
                 result.data = await updateDocs(body, newData)

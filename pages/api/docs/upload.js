@@ -51,9 +51,9 @@ export default async function upload_docs(req, res) {
                     return;
                 }
                 //cek param, desc is ok to be null
-                if(req.body.id_event) {
+                if(req.body.id_event && req.body.desc) {
                     const _res = await supabase.from(tableName).insert([
-                        {id_event: req.body.id_event, photo: "/assets/docs/" + req.file.filename}
+                        {id_event: req.body.id_event, desc:req.body.desc, photo: "/assets/docs/" + req.file.filename}
                     ])
                     if(_res.error) {
                         console.error(_res.error);

@@ -95,7 +95,7 @@ export default function Home({presenters, docs, events, event_details}) {
         pos={1}
         src={i.photo}
         title={i.events.title}
-        text={i.events.title}
+        text={i.desc}
       />
           ))}
       </div>
