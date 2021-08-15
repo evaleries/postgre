@@ -8,6 +8,7 @@ export default function presenters_upload_page() {
             <input type="file" accept="image/*" name="photo"/>
             <input type="text" name="name" placeholder="Name"/>
             <input type="text" name="desc" placeholder="Desc"/>
+            <input type="text" name="id_event" placeholder="id_event"/>
             <input type="submit" value="Upload"/>
         </form>
     </div>

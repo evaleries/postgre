@@ -36,9 +36,9 @@ async function getPemateri(filter) {
     return res.body;
 }
 
-async function insertPemateri(name, photo, desc) {
+async function insertPemateri(name, photo, desc, id_event) {
     const res = await supabase.from(tableName).insert([
-        {name: name, photo:photo, desc:desc}
+        {name: name, photo:photo, desc:desc, id_event:id_event}
     ])
     if(res.error)
         throw res.error;
@@ -79,8 +79,8 @@ export default async function pemateri(req, res) {
     } = req;
     switch(method) {
         case "POST":
-            if(body.name) {
-                result.data = await insertPemateri(body.name, body.photo, body.desc);
+            if(body.name && body.id_event) {
+                result.data = await insertPemateri(body.name, body.photo, body.desc, body.id_event);
             } else {
                 result.status = 400;
                 result.success = false;
@@ -102,7 +102,8 @@ export default async function pemateri(req, res) {
                 let newData = {
                     name: body.name,
                     photo: body.photo,
-                    desc: body.desc
+                    desc: body.desc,
+                    id_event: body.id_event
                 }
                 result.data = await updatePemateri(body, newData);
             } else {
