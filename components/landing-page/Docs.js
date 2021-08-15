@@ -35,7 +35,7 @@ export default function Docs({ docsData }) {
             pos={key}
             src={el.photo}
             title={el.events.title}
-            text={el.events.title}
+            text={el.desc}
           />
         ))}
       </div>
