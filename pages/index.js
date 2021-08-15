@@ -1,5 +1,4 @@
 import Head from 'next/head';
-
 import Hero from '../components/landing-page/Hero';
 import Objective from '../components/landing-page/Objective';
 import Events from '../components/landing-page/Events';

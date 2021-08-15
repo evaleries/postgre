@@ -13,32 +13,22 @@ async function getEvents(filter) {
     let res = await supabase.from(tableName).select(`
     id,
     title,
-    presenters (
-        name
-    ),
     date,
-    open_date
+    open_date,
+    photo
     `)
     if(filter) {
         if(filter.id) {
             res = await supabase.from(tableName).select(`
             id,
             title,
-            presenters (
-                name
-            ),
             date,
-            open_date
+            open_date,
+            photo
             `).eq("id", parseInt(filter.id))
         } else if(filter.year) {
             for(var i=0;i<res.body.length;i++) {
                 if(res.body[i].date.split('-')[0] != filter.year)
-                    res.body.splice(i, 1)
-            }
-        }
-        if(filter.presenter) {
-            for(var i=0;i<res.body.length;i++) {
-                if(res.body[i].presenters.name.toLowerCase().indexOf(filter.presenter.toLowerCase()) == -1)
                     res.body.splice(i, 1)
             }
         }
@@ -48,9 +38,9 @@ async function getEvents(filter) {
     return res.body
 }
 
-async function insertEvents(id_presenter, title, date, open_date) {
+async function insertEvents(title, date, open_date, photo) {
     const res = await supabase.from(tableName).insert([
-        {id_presenter: id_presenter, title:title, date:date, open_date: open_date}
+        {title:title, date:date, open_date: open_date, photo: photo}
     ])
     if(res.error)
         throw res.error;
@@ -91,8 +81,8 @@ export default async function events(req, res) {
     } = req;
     switch(method) {
         case "POST":
-            if(body.id_presenter && body.title && body.date && body.open_date) {
-                result.data = await insertEvents(body.id_presenter, body.title, body.date, body.open_date)
+            if(body.title && body.date && body.open_date && body.photo) {
+                result.data = await insertEvents(body.title, body.date, body.open_date, body.photo)
             } else {
                 result.status = 400;
                 result.success = false;
@@ -100,15 +90,15 @@ export default async function events(req, res) {
             }
             break
         case "GET":
-            result.data = query.year || query.presenter ? await getEvents(query) : await getEvents()
+            result.data = query.year ? await getEvents(query) : await getEvents()
             break
         case "PUT":
             if(body.id) {
                 let newData = {
-                    id_presenter: body.id_presenter,
                     title: body.title,
                     date: body.date,
-                    open_date: body.open_date
+                    open_date: body.open_date,
+                    photo: body.photo
                 }
                 result.data = await updateEvents(body, newData)
             } else {
