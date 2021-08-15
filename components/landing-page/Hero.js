@@ -1,5 +1,6 @@
 import Nav from '../Nav';
 import Image from 'next/image';
+import Link from 'next/link';
 import SwiperCore, { Navigation, EffectCoverflow, Autoplay } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
@@ -68,9 +69,11 @@ export default function Hero() {
               <h2>Kembangkan skill kamu</h2>
               <h2>dengan pemateri profesional</h2>
             </div>
-            <button className="font-sans2 font-bold text-[#004BA7] bg-white rounded-br-3xl shadow-md w-max py-2 px-4 2xl:text-2xl hover:bg-gray-200 active:bg-gray-300 transition-all">
-              Daftar Sekarang
-            </button>
+            <Link href="/pendaftaran">
+              <button className="font-sans2 font-bold text-[#004BA7] bg-white rounded-br-3xl shadow-md w-max py-2 px-4 2xl:text-2xl hover:bg-gray-200 active:bg-gray-300 transition-all">
+                Daftar Sekarang
+              </button>
+            </Link>
           </header>
         </div>
         <div className="hidden lg:inline absolute right-0 mt-8 bg-[#0F54AE] text-white pl-14 pr-20 py-3 rounded-bl-3xl 2xl:text-xl">
