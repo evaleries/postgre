@@ -1,5 +1,5 @@
-import TextInput from '../../components/registration-page/TextInput';
-import RadioInput from '../../components/registration-page/RadioInput';
+import TextInput from '../../components/register-page/TextInput';
+import RadioInput from '../../components/register-page/RadioInput';
 import Head from 'next/head';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
