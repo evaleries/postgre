@@ -13,9 +13,6 @@ async function getEvents(filter) {
     let res = await supabase.from(tableName).select(`
     id,
     title,
-    presenters (
-        name
-    ),
     date,
     open_date
     `)
@@ -24,9 +21,6 @@ async function getEvents(filter) {
             res = await supabase.from(tableName).select(`
             id,
             title,
-            presenters (
-                name
-            ),
             date,
             open_date
             `).eq("id", parseInt(filter.id))
