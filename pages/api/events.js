@@ -14,7 +14,8 @@ async function getEvents(filter) {
     id,
     title,
     date,
-    open_date
+    open_date,
+    photo
     `)
     if(filter) {
         if(filter.id) {
@@ -22,7 +23,8 @@ async function getEvents(filter) {
             id,
             title,
             date,
-            open_date
+            open_date,
+            photo
             `).eq("id", parseInt(filter.id))
         } else if(filter.year) {
             for(var i=0;i<res.body.length;i++) {
@@ -36,9 +38,9 @@ async function getEvents(filter) {
     return res.body
 }
 
-async function insertEvents(title, date, open_date) {
+async function insertEvents(title, date, open_date, photo) {
     const res = await supabase.from(tableName).insert([
-        {title:title, date:date, open_date: open_date}
+        {title:title, date:date, open_date: open_date, photo: photo}
     ])
     if(res.error)
         throw res.error;
@@ -79,8 +81,8 @@ export default async function events(req, res) {
     } = req;
     switch(method) {
         case "POST":
-            if(body.title && body.date && body.open_date) {
-                result.data = await insertEvents(body.title, body.date, body.open_date)
+            if(body.title && body.date && body.open_date && body.photo) {
+                result.data = await insertEvents(body.title, body.date, body.open_date, body.photo)
             } else {
                 result.status = 400;
                 result.success = false;
@@ -95,7 +97,8 @@ export default async function events(req, res) {
                 let newData = {
                     title: body.title,
                     date: body.date,
-                    open_date: body.open_date
+                    open_date: body.open_date,
+                    photo: body.photo
                 }
                 result.data = await updateEvents(body, newData)
             } else {

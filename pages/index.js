@@ -2,8 +2,8 @@ import Head from 'next/head';
 
 import Hero from '../components/landing-page/Hero';
 import Objective from '../components/landing-page/Objective';
-import Events from '../components/landing-page/Events';
-import Docs from '../components/landing-page/Docs';
+//import Events from '../components/landing-page/Events';
+//import Docs from '../components/landing-page/Docs';
 import Presenters from '../components/landing-page/Presenters';
 import FloatingButton from '../components/FloatingButton';
 import Footer from '../components/Footer';
@@ -65,7 +65,7 @@ export default function Home({presenters, docs, events, event_details}) {
       <div className="max-w-max mx-auto flex flex-wrap justify-evenly sm:max-w-4xl xl:max-w-6xl">
       {events.data.map((user, key) => (
             <EventsCard
-            src="/assets/event.png"
+            src={user.photo}
             title={user.title}
             date={convertDate(user.date)}
             speakers={event_details[user.id]}
