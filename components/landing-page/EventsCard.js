@@ -32,7 +32,7 @@ export default function EventsCard({ src, title, place, date, speakers }) {
         <div className="flex justify-between text-[#004BA7] my-3">
           <SpeakerInfo
             name={speakers[0]}
-            text="1st Speaker"
+            text={speakers.length > 1 ? '1st Speaker' : 'Main speaker'}
             className="rounded-r-lg"
           />
           {speakers[1] && (
