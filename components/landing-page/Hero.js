@@ -7,7 +7,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 SwiperCore.use([Navigation, EffectCoverflow, Autoplay]);
 export default function Hero() {
   return (
-    <div className="bg-hero">
+    <div id="home" className="bg-hero">
       <Nav />
       <div className="pb-40 2xl:pb-56 relative">
         <div className="max-w-max mt-10 mx-auto flex flex-col justify-center items-center sm:max-w-4xl lg:items-start lg:justify-between lg:flex-row xl:max-w-6xl">
@@ -70,7 +70,7 @@ export default function Hero() {
               <h2>dengan pemateri profesional</h2>
             </div>
             <Link href="/pendaftaran">
-              <button className="font-sans2 font-bold text-[#004BA7] bg-white rounded-br-3xl shadow-md w-max py-2 px-4 2xl:text-2xl hover:bg-gray-200 active:bg-gray-300 transition-all">
+              <button className="font-sans2 font-bold text-[#004BA7] bg-white rounded-br-3xl shadow-md w-max py-2 px-4 2xl:text-2xl hover:bg-gray-100 hover:scale-105 active:scale-100 transition-all">
                 Daftar Sekarang
               </button>
             </Link>

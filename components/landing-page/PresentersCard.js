@@ -2,7 +2,7 @@ import Image from 'next/image';
 
 export default function PresentersCard({ src, name, info }) {
   return (
-    <div className="mx-4 my-8 shadow-lg rounded-2xl overflow-hidden transition hover:-translate-y-2">
+    <div className="mx-4 my-8 shadow-lg rounded-2xl overflow-hidden transition hover:-translate-y-2 active:translate-y-0">
       <div className="mx-auto w-72 sm:w-60">
         <div className="w-full h-52 relative">
           <Image

@@ -3,7 +3,7 @@ import SectionHeader from './SectionHeader';
 
 export default function Presenters({ presentersData }) {
   return (
-    <section className="my-20">
+    <section id="presenters" className="my-20">
       <SectionHeader text="Pemateri" />
       <div className="max-w-max mx-auto flex flex-wrap justify-evenly sm:max-w-4xl xl:max-w-6xl">
         {presentersData?.map((el) => (
