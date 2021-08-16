@@ -33,8 +33,19 @@ async function getEvents(filter) {
             }
         }
     }
+    
     if(res.error)
         throw res.error
+    let presenters = await supabase.from("presenters").select("*")
+    for(var i=0;i<res.body.length;i++) {
+        let _ = []
+        for(var j=0;j<presenters.body.length;j++) {
+            if(res.body[i].id == presenters.body[j].id_event) {
+                _.push(presenters.body[j].name)
+            }
+        }
+        res.body[i].presenters = _;
+    }
     return res.body
 }
 
