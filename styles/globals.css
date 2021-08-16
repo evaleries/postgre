@@ -21,7 +21,7 @@
     background-image: linear-gradient(280.05deg, #0a4fa4 0%, #939ce8 127.73%);
   }
   .radio {
-    @apply flex items-center cursor-pointer;
+    @apply flex items-center cursor-pointer py-1;
   }
   .radio__input {
     display: none;
@@ -31,8 +31,8 @@
     width: 1rem;
     border: 2px solid #004ba7;
     border-radius: 50%;
-    padding: 2px;
-    margin-right: 10px;
+    padding: 3px;
+    margin-right: 14px;
   }
   .radio__radio::after {
     content: '';

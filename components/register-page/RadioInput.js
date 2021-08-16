@@ -13,7 +13,7 @@ export default function RadioInput({ setFieldValue }) {
         className="text-red-600 text-sm mb-2"
       />
 
-      <div className="space-y-2">
+      <div>
         <div>
           <label className="radio">
             <input
@@ -81,7 +81,7 @@ export default function RadioInput({ setFieldValue }) {
           <input
             id="Lainnya_text"
             type="text"
-            className="ring-1 ring-gray-400 outline-none flex-1 pl-1 py-1 cursor-pointer"
+            className="ring-1 ring-gray-400 outline-none flex-1 pl-2 py-2 cursor-pointer"
             placeholder="Lainnya"
             onInput={(event) => {
               const radio = document.getElementById('Lainnya');

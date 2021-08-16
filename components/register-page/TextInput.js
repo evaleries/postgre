@@ -2,7 +2,7 @@ import { useField, ErrorMessage } from 'formik';
 import {
   HiOutlineUser,
   HiOutlineMail,
-  HiOutlineLocationMarker,
+  HiOutlineAcademicCap,
 } from 'react-icons/hi';
 import { FaWhatsapp } from 'react-icons/fa';
 
@@ -25,7 +25,8 @@ function InputField({ label, Icon, ...props }) {
           id={field.name}
           {...field}
           {...props}
-          className={`flex-1 pl-2 pr-8 py-1 ring-1 ${
+          autoComplete="off"
+          className={`flex-1 pl-3 pr-8 py-2 ring-1 ${
             meta.touched && meta.error
               ? 'ring-red-400 bg-red-100'
               : 'ring-gray-400 bg-transparent'
@@ -55,18 +56,18 @@ export default function TextInput() {
         Icon={HiOutlineMail}
       />
       <InputField
+        name="asal"
+        label="Instansi"
+        type="text"
+        placeholder="Masukkan asal instansi"
+        Icon={HiOutlineAcademicCap}
+      />
+      <InputField
         name="whatsapp"
         label="Whatsapp"
         type="text"
         placeholder="Masukkan nomor whatsapp"
         Icon={FaWhatsapp}
-      />
-      <InputField
-        name="asal"
-        label="Asal"
-        type="text"
-        placeholder="Masukkan kota/kabupaten anda"
-        Icon={HiOutlineLocationMarker}
       />
     </>
   );
