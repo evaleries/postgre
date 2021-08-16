@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import Link from 'next/link';
 
 function SpeakerInfo({ name, text, className }) {
   return (
@@ -29,7 +30,7 @@ export default function EventsCard({ src, title, place, date, speakers }) {
           <p className="text-sm font-medium 2xl:text-base">{place}</p>
           <p className="text-sm font-medium 2xl:text-base">{date}</p>
         </div>
-        <div className="flex justify-between text-[#004BA7] my-3">
+        {/* <div className="flex justify-between text-[#004BA7] my-3">
           <SpeakerInfo
             name={speakers[0]}
             text={speakers.length > 1 ? '1st Speaker' : 'Main speaker'}
@@ -42,10 +43,12 @@ export default function EventsCard({ src, title, place, date, speakers }) {
               className="rounded-l-lg"
             />
           )}
-        </div>
-        <button className="font-sans2 font-bold bg-[#004BA7] text-white transition-all shadow-md w-full py-3 mt-1 hover:bg-[#99A8BB] active:text-gray-300">
-          Daftar Sekarang
-        </button>
+        </div> */}
+        <Link href="/pendaftaran">
+          <button className="font-sans2 font-bold bg-[#004BA7] text-white transition-all shadow-md w-full py-3 mt-1 hover:bg-[#99A8BB] active:text-gray-300">
+            Daftar Sekarang
+          </button>
+        </Link>
       </div>
     </div>
   );

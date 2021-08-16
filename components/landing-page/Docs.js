@@ -4,7 +4,7 @@ import SectionHeader from './SectionHeader';
 function DocsContent({ src, title, text, pos }) {
   return (
     <div
-      className={`w-[300px] lg:w-[440px] my-6 hover:-translate-y-2 transition-transform ${
+      className={`w-[300px] lg:w-[440px] my-6 hover:-translate-y-2 active:translate-y-0 transition-transform ${
         pos % 2 === 1 && 'md:mt-20'
       }`}
     >
@@ -35,7 +35,7 @@ export default function Docs({ docsData }) {
             pos={key}
             src={el.photo}
             title={el.events.title}
-            text={el.events.title}
+            text={el.desc}
           />
         ))}
       </div>

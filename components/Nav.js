@@ -9,14 +9,14 @@ export default function Nav() {
       {/* Tablet/Laptop */}
 
       <ul className="hidden sm:flex space-x-4 text-white font-medium">
-        <li className="hover:scale-105 active:text-gray-300">
-          <a href="#">Home</a>
+        <li className="hover:scale-105 active:scale-100 transition-transform">
+          <a href="#home">Home</a>
         </li>
-        <li className="hover:scale-105 active:text-gray-300">
-          <a href="#">Acara</a>
+        <li className="hover:scale-105 active:scale-100 transition-transform">
+          <a href="#events">Acara</a>
         </li>
-        <li className="hover:scale-105 active:text-gray-300">
-          <a href="#">Pemateri</a>
+        <li className="hover:scale-105 active:scale-100 transition-transform">
+          <a href="#presenters">Pemateri</a>
         </li>
       </ul>
 
@@ -28,13 +28,13 @@ export default function Nav() {
         </Menu.Button>
         <Menu.Items className="absolute bg-white right-0 flex flex-col space-y-4 py-4 px-12 z-50 rounded-md font-medium">
           <Menu.Item>
-            <a href="#">Home</a>
+            <a href="#home">Home</a>
           </Menu.Item>
           <Menu.Item>
-            <a href="#">Acara</a>
+            <a href="#events">Acara</a>
           </Menu.Item>
           <Menu.Item>
-            <a href="#">Pemateri</a>
+            <a href="#presenters">Pemateri</a>
           </Menu.Item>
         </Menu.Items>
       </Menu>

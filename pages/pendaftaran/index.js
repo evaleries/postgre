@@ -1,7 +1,6 @@
 import TextInput from '../../components/register-page/TextInput';
 import RadioInput from '../../components/register-page/RadioInput';
 import Head from 'next/head';
-import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { HiChevronLeft } from 'react-icons/hi';
 import { Formik, Form } from 'formik';
@@ -45,11 +44,12 @@ export default function Pendaftaran() {
         >
           {({ setFieldValue }) => (
             <div className="bg-white rounded-sm py-4 px-4 sm:px-10 m-4 flex-1 max-w-3xl">
-              <Link href="/">
-                <div>
-                  <HiChevronLeft className="h-12 w-12 text-[#004BA7] hover:text-blue-500 absolute cursor-pointer" />
-                </div>
-              </Link>
+              <div
+                className="absolute cursor-pointer hover:scale-110 active:scale-100 transition-transform"
+                onClick={() => router.push('/')}
+              >
+                <HiChevronLeft className="h-12 w-12 text-[#004BA7] hover:text-blue-500 transition-colors" />
+              </div>
               <img
                 src="/assets/logo.svg"
                 className="h-12 object-contain mx-auto"
@@ -63,7 +63,7 @@ export default function Pendaftaran() {
                 <div className="flex justify-end">
                   <button
                     type="submit"
-                    className="text-white bg-[#004BA7] px-2 py-1 rounded-md hover:shadow-md active:scale-95"
+                    className="text-white bg-[#004BA7] px-2 py-1 rounded-md hover:scale-105 active:scale-100 transition-transform"
                   >
                     Submit
                   </button>

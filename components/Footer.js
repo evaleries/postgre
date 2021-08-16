@@ -15,7 +15,7 @@ function FooterHeader({ text }) {
 
 function FooterContents({ Icon, text }) {
   return (
-    <div className="flex items-center my-6">
+    <div className="flex items-center my-6 cursor-pointer hover:scale-105 active:scale-100 transition-transform">
       <Icon className="h-6 w-6 text-red-white" />
       <p className="ml-4">{text}</p>
     </div>
@@ -23,8 +23,11 @@ function FooterContents({ Icon, text }) {
 }
 
 export default function Footer() {
+  const WA_BASE_URL =
+    'https://api.whatsapp.com/send?text=Hallo+Kak,+Saya+ingin+bertanya+mengenai+kegiatan+POSTGRE+2021&phone=';
+
   return (
-    <footer className="bg-footer text-white">
+    <footer id="footer" className="bg-footer text-white">
       <div className="mx-auto py-4 flex flex-wrap justify-evenly max-w-6xl">
         <FooterSection>
           <div className="flex">
@@ -34,13 +37,21 @@ export default function Footer() {
         </FooterSection>
         <FooterSection>
           <FooterHeader text="Contact Person" />
-          <FooterContents Icon={FaWhatsapp} text="Johar +62 8788 9877 979" />
-          <FooterContents Icon={FaWhatsapp} text="Kukuh +62 8357 9272 989" />
+          <a href={WA_BASE_URL + '087889877979'}>
+            <FooterContents Icon={FaWhatsapp} text="Johar +62 8788 9877 979" />
+          </a>
+          <a href={WA_BASE_URL + '087889877979'}>
+            <FooterContents Icon={FaWhatsapp} text="Kukuh +62 8357 9272 989" />
+          </a>
         </FooterSection>
         <FooterSection>
           <FooterHeader text="Social Media" />
-          <FooterContents Icon={FiYoutube} text="Lab. Pemro Official" />
-          <FooterContents Icon={FiInstagram} text="@pemroilkom_unej" />
+          <a href="https://www.youtube.com/channel/UCtgRiN1tHOvmZXKQoBkTlwg">
+            <FooterContents Icon={FiYoutube} text="Lab. Pemro Official" />
+          </a>
+          <a href="https://www.instagram.com/pemroilkom_unej">
+            <FooterContents Icon={FiInstagram} text="@pemroilkom_unej" />
+          </a>
         </FooterSection>
         <FooterSection>
           <FooterHeader text="E-mail" />
