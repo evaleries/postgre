@@ -1,12 +1,5 @@
 import { supabase } from "../../utils/supabase"
 
-let result = {
-    "status": 200,
-    "success": true,
-    "message": "ok",
-    "data": []
-}
-
 const tableName = "docs"
 
 /*
@@ -115,6 +108,12 @@ async function deleteDocs(id) {
 }
 
 export default async function docs(req, res) {
+    let result = {
+        "status": 200,
+        "success": true,
+        "message": "ok",
+        "data": []
+    }
     const {
         query,
         body,

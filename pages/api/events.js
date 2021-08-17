@@ -1,12 +1,5 @@
 import { supabase } from "../../utils/supabase"
 
-let result = {
-    "status": 200,
-    "success": true,
-    "message": "ok",
-    "data": []
-}
-
 const tableName = "events"
 
 async function getEvents(filter) {
@@ -84,6 +77,12 @@ async function deleteEvents(id) {
 }
 
 export default async function events(req, res) {
+    let result = {
+        "status": 200,
+        "success": true,
+        "message": "ok",
+        "data": []
+    }
     //body = post, query = ? url
     const {
         query,
