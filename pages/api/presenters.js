@@ -1,12 +1,5 @@
 import {supabase} from '../../utils/supabase'
 
-let result = {
-    "status": 200,
-    "success": true,
-    "message": "ok",
-    "data": []
-}
-
 const tableName = "presenters"
 
 function shuffle(arr) {
@@ -72,6 +65,12 @@ async function deletePemateri(id) {
 
 export default async function pemateri(req, res) {
     //body = post, query = ? url
+    let result = {
+        "status": 200,
+        "success": true,
+        "message": "ok",
+        "data": []
+    }
     const {
         query,
         body,

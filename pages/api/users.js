@@ -1,12 +1,5 @@
 import {supabase} from '../../utils/supabase'
 
-let result = {
-    "status": 200,
-    "success": true,
-    "message": "ok",
-    "data": []
-}
-
 const tableName = "users"
 
 async function getPartisipan(filter) {
@@ -142,6 +135,12 @@ async function deletePartisipan(filter) {
 }
 
 export default async function partisipan(req, res) {
+    let result = {
+        "status": 200,
+        "success": true,
+        "message": "ok",
+        "data": []
+    }
     //body = post, query = ? url
     const {
         query,
