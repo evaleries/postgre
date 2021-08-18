@@ -15,7 +15,7 @@ function Button({ Icon, onClick }) {
 export default function FloatingButton() {
   return (
     <div className="fixed bottom-4 right-2 sm:right-4 z-50">
-      <a href="#footer">
+      <a href="mailto:pemroofficial@cs.unej.id">
         <Button Icon={FiMail} />
       </a>
       <a href="#footer">

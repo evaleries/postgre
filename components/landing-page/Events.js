@@ -24,7 +24,7 @@ const convertDate = (date) => {
 };
 
 export default function Events({ eventsData }) {
-  console.log(eventsData);
+  const now = new Date();
   return (
     <section id="events" className="mt-20">
       <SectionHeader text="Acara Postgre" />
@@ -33,11 +33,13 @@ export default function Events({ eventsData }) {
           return (
             <EventsCard
               key={el.id}
-              src="/assets/event.png"
+              eventId={el.id}
+              src={el.photo}
               title={el.title}
               place="Via Zoom"
               date={convertDate(el.date)}
               speakers={el.presenters}
+              underway={now < new Date(el.date)}
             />
           );
         })}

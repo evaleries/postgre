@@ -7,12 +7,9 @@ import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
 import { useState, Fragment } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
-import useSWR from 'swr';
 
 export default function Pendaftaran() {
   const router = useRouter();
-  const { data: eventsData } = useSWR('/api/events');
-
   const [isSuccess, setIsSuccess] = useState(false);
   const [isFailed, setIsFailed] = useState(false);
   const [failMessage, setFailMessage] = useState('');
@@ -46,19 +43,16 @@ export default function Pendaftaran() {
           }}
           validationSchema={schema}
           onSubmit={async (values) => {
-            const latestEventsId =
-              eventsData?.data[eventsData?.data.length - 1].id;
-
-            alert(JSON.stringify({ ...values, id_event: latestEventsId }));
-
             const fetchData = await fetch('/api/users', {
               method: 'POST',
-              body: JSON.stringify({ ...values, id_event: latestEventsId }),
+              body: JSON.stringify({
+                ...values,
+                id_event: router.query.eventId,
+              }),
               headers: {
                 'Content-type': 'application/json; charset=UTF-8',
               },
             }).then((response) => response.json());
-            console.log(fetchData);
             if (fetchData.success) {
               setIsSuccess(true);
             } else {
@@ -68,27 +62,27 @@ export default function Pendaftaran() {
           }}
         >
           {({ setFieldValue }) => (
-            <div className="bg-white rounded-md py-4 px-4 sm:px-10 m-4 flex-1 max-w-3xl">
+            <div className="bg-white shadow-md rounded-sm py-4 px-4 sm:px-10 m-4 flex-1 max-w-2xl">
               <div
                 className="absolute cursor-pointer hover:scale-110 active:scale-100 transition-transform"
                 onClick={() => router.push('/')}
               >
-                <HiChevronLeft className="h-12 w-12 text-[#004BA7] hover:text-blue-500 transition-colors" />
+                <HiChevronLeft className="h-10 w-10 sm:h-12 sm:w-12 text-[#004BA7] hover:text-blue-500 transition-colors" />
               </div>
               <img
                 src="/assets/logo.svg"
-                className="h-12 object-contain mx-auto"
+                className="h-10 sm:h-12 object-contain mx-auto"
               />
-              <h1 className="font-medium text-xl text-center my-4">
+              <h1 className="font-medium text-lg sm:text-xl text-center my-4">
                 Pendaftaran Event
               </h1>
-              <Form className="my-4 px-4 sm:px-10 space-y-4">
+              <Form className="my-4 px-4 sm:px-10 space-y-6">
                 <TextInput />
                 <RadioInput setFieldValue={setFieldValue} />
                 <div className="flex justify-end pt-6">
                   <button
                     type="submit"
-                    className="text-white bg-[#004BA7] px-2 py-1 rounded-md hover:scale-105 active:scale-100 transition-transform"
+                    className="text-white bg-[#004BA7] px-4 py-1 rounded-md hover:scale-105 active:scale-100 transition-transform"
                   >
                     Submit
                   </button>

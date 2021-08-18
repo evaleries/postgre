@@ -12,9 +12,17 @@ function SpeakerInfo({ name, text, className }) {
   );
 }
 
-export default function EventsCard({ src, title, place, date, speakers }) {
+export default function EventsCard({
+  src,
+  title,
+  place,
+  date,
+  speakers,
+  underway,
+  eventId,
+}) {
   return (
-    <div className="mx-4 hover:-translate-y-2 transition-transform">
+    <div className="mx-4">
       <div className="shadow-lg rounded-2xl w-[300px] overflow-hidden my-8 mx-auto">
         <div className="relative w-full h-52">
           <Image
@@ -44,11 +52,17 @@ export default function EventsCard({ src, title, place, date, speakers }) {
             />
           )}
         </div>
-        <Link href="/pendaftaran">
-          <button className="font-sans2 font-bold bg-[#004BA7] text-white transition-all shadow-md w-full py-3 mt-1 hover:bg-[#99A8BB] active:text-gray-300">
+        {underway ? (
+          <Link href={`/pendaftaran?eventId=${eventId}`}>
+            <button className="font-sans2 font-bold bg-[#004BA7] text-white transition-all shadow-md w-full py-3 mt-1 hover:bg-[#99A8BB] active:text-gray-300">
+              Daftar Sekarang
+            </button>
+          </Link>
+        ) : (
+          <button className="font-sans2 font-bold bg-gray-600 hover:bg-gray-700 text-white transition-all shadow-md w-full py-3 mt-1 active:text-gray-300">
             Daftar Sekarang
           </button>
-        </Link>
+        )}
       </div>
     </div>
   );
