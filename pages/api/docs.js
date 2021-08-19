@@ -52,10 +52,9 @@ async function getDocs(filter) {
                 date
             )
             `).ilike("events.title", `%${filter.title}%`);
-            for(var i=0;i<res.body.length;i++) {
-                if(res.body[i].events == null)
-                    res.body.splice(i, 1)
-            }
+            res.body = res.body.filter(function (value, index, array) {
+                return (value.events != null);
+            });
         }
     } else {
         res = await supabase.from(tableName).select(`
