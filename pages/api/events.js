@@ -20,10 +20,9 @@ async function getEvents(filter) {
             photo
             `).eq("id", parseInt(filter.id))
         } else if(filter.year) {
-            for(var i=0;i<res.body.length;i++) {
-                if(res.body[i].date.split('-')[0] != filter.year)
-                    res.body.splice(i, 1)
-            }
+            res.body = res.body.filter(function (value, index, array) {
+                return (value.date.split('-')[0] == filter.year);
+            });
         }
     }
     

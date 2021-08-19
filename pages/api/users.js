@@ -19,28 +19,24 @@ async function getPartisipan(filter) {
     if(filter) {
         //pake if, loop 1 1 biar bisa apply multifilter
         if(filter.id) {
-            for(var i=0;i<res.body.length;i++) {
-                if(res.body[i].id != filter.id)
-                    res.body.splice(i, 1)
-            }
+            res.body = res.body.filter(function (value, index, array) {
+                return (value.id == filter.id);
+            });
         } 
         if(filter.email) {
-            for(var i=0;i<res.body.length;i++) {
-                if(res.body[i].email != filter.email)
-                    res.body.splice(i, 1)
-            }
+            res.body = res.body.filter(function (value, index, array) {
+                return (value.email == filter.email);
+            });
         } 
         if(filter.whatsapp) {
-            for(var i=0;i<res.body.length;i++) {
-                if(res.body[i].whatsapp != filter.whatsapp)
-                    res.body.splice(i, 1)
-            }
+            res.body = res.body.filter(function (value, index, array) {
+                return (value.whatsapp == filter.whatsapp);
+            });
         } 
         if(filter.nama) {
-            for(var i=0;i<res.body.length;i++) {
-                if(res.body[i].nama.toLowerCase().indexOf(filter.nama.toLowerCase()) == -1)
-                    res.body.splice(i, 1)
-            }
+            res.body = res.body.filter(function (value, index, array) {
+                return (value.nama.toLowerCase().indexOf(filter.nama.toLowerCase()) != -1);
+            });
         } 
         if(filter.id_event) {
             res = await supabase.from(tableName).select(`
@@ -55,10 +51,9 @@ async function getPartisipan(filter) {
                 id
             )
             `).eq("events.id", parseInt(filter.id_event))
-            for(var i=0;i<res.body.length;i++) {
-                if(res.body[i].events == null)
-                    res.body.splice(i, 1)
-            }
+            res.body = res.body.filter(function (value, index, array) {
+                return (value.events != null);
+            });
         }
     }
     if(res.error)
