@@ -7,6 +7,7 @@ import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
 import { useState, Fragment } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
+import Link from 'next/link';
 
 export default function Pendaftaran() {
   const router = useRouter();
@@ -79,7 +80,13 @@ export default function Pendaftaran() {
               <Form className="my-4 px-4 sm:px-10 space-y-6">
                 <TextInput />
                 <RadioInput setFieldValue={setFieldValue} />
-                <div className="flex justify-end pt-6">
+                <div className="flex items-center justify-between pt-6">
+                  <p className="text-sm">
+                    Sudah mendaftar?{' '}
+                    <span className="underline cursor-pointer hover:text-blue-600 active:text-blue-400 transition-colors inline-block">
+                      <Link href="/pendaftaran/check">Cek pendaftaran</Link>
+                    </span>
+                  </p>
                   <button
                     type="submit"
                     className="text-white bg-[#004BA7] px-4 py-1 rounded-md hover:scale-105 active:scale-100 transition-transform"

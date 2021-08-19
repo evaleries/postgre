@@ -5,15 +5,36 @@ import Tickets from '../../components/registration-check/Tickets';
 import { useRouter } from 'next/router';
 import useSWR from 'swr';
 
+const convertDate = (date) => {
+  const month = [
+    'Januari',
+    'Februari',
+    'Maret',
+    'April',
+    'Mei',
+    'Juni',
+    'Juli',
+    'Agustus',
+    'September',
+    'Oktober',
+    'November',
+    'Desember',
+  ];
+  return (
+    date.split('-')[2] +
+    ` ${month[date.split('-')[1] - 1]} ` +
+    date.split('-')[0]
+  );
+};
+
 export default function Check() {
   const emailRef = useRef();
   const router = useRouter();
-  let usersData = {};
+  const { data: eventsData } = useSWR(`/api/events`);
   const { data } = useSWR(`/api/users?email=${router.query.email || ''}`);
+  let usersData;
   if (router.query.email) {
     usersData = data;
-    console.log(`/api/users?email=${router.query.email || ''}`);
-    console.log(usersData?.data);
   }
   return (
     <div className="min-h-screen flex justify-center items-center">
@@ -47,7 +68,7 @@ export default function Check() {
                 `/pendaftaran/check?email=${emailRef.current.value}`
               );
             }}
-            className="flex mx-8 sm:mx-auto sm:max-w-sm justify-center ring-2 ring-[#004BA7] p-1 mt-2"
+            className="flex mx-8 sm:mx-auto sm:max-w-sm justify-center rounded-sm ring-1 ring-[#004BA7] p-1 mt-5"
           >
             <input
               ref={emailRef}
@@ -56,29 +77,23 @@ export default function Check() {
               className="text-center flex-1 outline-none text-sm sm:text-base"
             />
             <button type="submit">
-              <HiSearch className="h-5 w-5 text-gray-600 hover:text-black transition-colors" />
+              <HiSearch className="h-5 w-5 text-gray-400 hover:text-black transition-colors" />
             </button>
           </form>
-          <hr className="bg-[#004BA7] h-[3px] m-4 sm:m-6"></hr>
+          <hr className="bg-[#004BA7] h-[2.2px] m-4 sm:m-6"></hr>
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 mx-4 sm:mx-6 justify-items-center">
-            <Tickets
-              eventName="Profesional Work Environment"
-              date="26 September 2021"
-              name="nama1"
-              code="1"
-            />
-            <Tickets
-              eventName="Data Science for Beginners"
-              date="17 Oktober 2021"
-              name="nama2"
-              code="2"
-            />
-            <Tickets
-              eventName="Python Fundamentals"
-              date="18 September 2021"
-              name="nama3"
-              code="3"
-            />
+            {usersData?.data.map((el) => {
+              const event = eventsData.data.filter((e) => e.id === el.id_event);
+              return (
+                <Tickets
+                  key={el.id}
+                  eventName={event[0].title}
+                  date={convertDate(event[0].date)}
+                  name={el.nama}
+                  code={el.id}
+                />
+              );
+            })}
           </div>
         </main>
       </div>
