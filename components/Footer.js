@@ -55,7 +55,9 @@ export default function Footer() {
         </FooterSection>
         <FooterSection>
           <FooterHeader text="E-mail" />
-          <FooterContents Icon={FiMail} text="pemroofficial@cs.unej.id" />
+          <a href="mailto:pemroofficial@cs.unej.id">
+            <FooterContents Icon={FiMail} text="pemroofficial@cs.unej.id" />
+          </a>
         </FooterSection>
       </div>
       <h3 className="text-sm text-center p-2 border-t border-gray-300">
