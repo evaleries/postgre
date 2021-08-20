@@ -37,16 +37,16 @@ export default function Check() {
     usersData = data;
   }
   return (
-    <div className="min-h-screen flex justify-center items-center">
+    <div className="min-h-screen bg-gradient-to-br from-[#939CE8] to-[#004BA7] flex justify-center items-center">
       <Head>
         <title>POSTGRE 2021 | Registration checck</title>
       </Head>
-      <div className="min-h-[400px] mx-8 flex-1 bg-white max-w-3xl">
+      <div className="min-h-[400px] m-2 flex-1 bg-white py-4 sm:px-4 shadow-md rounded-sm max-w-3xl">
         <div
           className="absolute cursor-pointer hover:scale-110 active:scale-100 transition-transform"
-          onClick={() => router.push('/')}
+          onClick={() => router.push('/pendaftaran')}
         >
-          <HiChevronLeft className="h-10 w-10 sm:h-12 sm:w-12 text-[#004BA7] hover:text-blue-500 transition-colors" />
+          <HiChevronLeft className="mx-2 h-10 w-10 sm:h-12 sm:w-12 text-[#004BA7] hover:text-blue-500 transition-colors" />
         </div>
         <img
           src="/assets/logo.svg"
@@ -81,19 +81,35 @@ export default function Check() {
             </button>
           </form>
           <hr className="bg-[#004BA7] h-[2.2px] m-4 sm:m-6"></hr>
-          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 mx-4 sm:mx-6 justify-items-center">
-            {usersData?.data.map((el) => {
-              const event = eventsData.data.filter((e) => e.id === el.id_event);
-              return (
-                <Tickets
-                  key={el.id}
-                  eventName={event[0].title}
-                  date={convertDate(event[0].date)}
-                  name={el.nama}
-                  code={el.id}
-                />
-              );
-            })}
+          <div
+            className={`grid grid-cols-1 gap-6 ${
+              usersData?.data.length > 1 ? 'sm:grid-cols-2' : ''
+            } mx-4 sm:mx-6 justify-items-center`}
+          >
+            {usersData ? (
+              usersData.data.length ? (
+                usersData.data.map((el) => {
+                  const event = eventsData?.data.filter(
+                    (e) => e.id === el.id_event
+                  );
+                  return (
+                    <Tickets
+                      key={el.id}
+                      eventName={event && event[0].title}
+                      date={event && convertDate(event[0].date)}
+                      name={el.nama}
+                      code={el.id}
+                    />
+                  );
+                })
+              ) : (
+                <p className="text-red-600">Alamat email belum terdaftar</p>
+              )
+            ) : (
+              <p className="text-gray-600">
+                {router.query.email && 'Tunggu sebentar . . .'}
+              </p>
+            )}
           </div>
         </main>
       </div>

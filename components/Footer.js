@@ -23,8 +23,7 @@ function FooterContents({ Icon, text }) {
 }
 
 export default function Footer() {
-  const WA_BASE_URL =
-    'https://api.whatsapp.com/send?text=Hallo+Kak,+Saya+ingin+bertanya+mengenai+kegiatan+POSTGRE+2021&phone=';
+  const WA_BASE_URL = 'https://wa.me/';
 
   return (
     <footer id="footer" className="bg-footer text-white">
@@ -37,11 +36,17 @@ export default function Footer() {
         </FooterSection>
         <FooterSection>
           <FooterHeader text="Contact Person" />
-          <a href={WA_BASE_URL + '087889877979'}>
-            <FooterContents Icon={FaWhatsapp} text="Johar +62 8788 9877 979" />
+          <a href={WA_BASE_URL + '+6282139997597'}>
+            <FooterContents
+              Icon={FaWhatsapp}
+              text="Fakhrii +62 821 3999 7597"
+            />
           </a>
-          <a href={WA_BASE_URL + '087889877979'}>
-            <FooterContents Icon={FaWhatsapp} text="Kukuh +62 8357 9272 989" />
+          <a href={WA_BASE_URL + '+6283847193167'}>
+            <FooterContents Icon={FaWhatsapp} text="Wisnu +62 838 4719 3167" />
+          </a>
+          <a href={WA_BASE_URL + '+62895630905343'}>
+            <FooterContents Icon={FaWhatsapp} text="Mikli +62 895 6309 05343" />
           </a>
         </FooterSection>
         <FooterSection>

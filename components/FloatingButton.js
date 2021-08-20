@@ -7,7 +7,7 @@ function Button({ Icon, onClick }) {
       className="p-2 bg-white rounded-full cursor-pointer border-2 border-black/5 shadow-lg hover:scale-105 active:scale-100 active:bg-gray-200 mb-4 transition-transform"
       onClick={onClick}
     >
-      <Icon className="h-6 w-6 text-blue-600" />
+      <Icon className="h-7 w-7 text-blue-600" />
     </div>
   );
 }

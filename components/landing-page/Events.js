@@ -26,7 +26,7 @@ const convertDate = (date) => {
 export default function Events({ eventsData }) {
   const now = new Date();
   return (
-    <section id="events" className="mt-20">
+    <section id="events" className="py-10 bg-blue-100">
       <SectionHeader text="Acara Postgre" />
       <div className="max-w-max mx-auto flex flex-wrap justify-evenly sm:max-w-4xl xl:max-w-6xl">
         {eventsData?.map((el) => {

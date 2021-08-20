@@ -63,12 +63,12 @@ export default function Pendaftaran() {
           }}
         >
           {({ setFieldValue }) => (
-            <div className="bg-white shadow-md rounded-sm py-4 px-4 sm:px-10 m-4 flex-1 max-w-2xl">
+            <div className="bg-white shadow-md rounded-sm p-4 m-2 flex-1 max-w-2xl">
               <div
                 className="absolute cursor-pointer hover:scale-110 active:scale-100 transition-transform"
                 onClick={() => router.push('/')}
               >
-                <HiChevronLeft className="h-10 w-10 sm:h-12 sm:w-12 text-[#004BA7] hover:text-blue-500 transition-colors" />
+                <HiChevronLeft className="mx-2 h-10 w-10 sm:h-12 sm:w-12 text-[#004BA7] hover:text-blue-500 transition-colors" />
               </div>
               <img
                 src="/assets/logo.svg"
@@ -77,7 +77,7 @@ export default function Pendaftaran() {
               <h1 className="font-medium text-lg sm:text-xl text-center my-4">
                 Pendaftaran Event
               </h1>
-              <Form className="my-4 px-4 sm:px-10 space-y-6">
+              <Form className="my-4 px-1 sm:px-10 space-y-6">
                 <TextInput />
                 <RadioInput setFieldValue={setFieldValue} />
                 <div className="flex items-center justify-between pt-6">
