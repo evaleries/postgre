@@ -68,11 +68,9 @@ export default function Hero() {
               <h2>Kembangkan skill kamu</h2>
               <h2>dengan pemateri profesional</h2>
             </div>
-            <a href="#events">
-              <button className="font-sans2 font-bold text-[#004BA7] bg-white rounded-br-3xl shadow-md w-max py-2 px-4 2xl:text-2xl hover:bg-gray-100 hover:scale-105 active:scale-100 transition-all">
-                Daftar Sekarang
-              </button>
-            </a>
+            <button className="font-sans2 font-bold text-[#004BA7] bg-white rounded-br-3xl shadow-md w-max py-2 px-4 2xl:text-2xl hover:bg-gray-100 hover:scale-105 active:scale-100 transition-all">
+              <a href="#events">Daftar Sekarang</a>
+            </button>
           </header>
         </div>
         <div className="hidden lg:inline absolute right-0 mt-8 bg-[#0F54AE] text-white pl-14 pr-20 py-3 rounded-bl-3xl 2xl:text-xl">

@@ -4,11 +4,11 @@ import SectionHeader from './SectionHeader';
 function DocsContent({ src, title, text, pos }) {
   return (
     <div
-      className={`w-[300px] lg:w-[440px] my-6 hover:-translate-y-2 active:translate-y-0 transition-transform ${
+      className={`w-[300px] lg:w-[400px] my-6 hover:-translate-y-2 active:translate-y-0 transition-transform ${
         pos % 2 === 1 && 'md:mt-20'
       }`}
     >
-      <div className="w-full h-48 relative rounded-lg shadow-sm lg:h-72">
+      <div className="w-full h-48 relative rounded-lg shadow-sm lg:h-64">
         <Image
           src={src}
           alt={title}
@@ -26,9 +26,9 @@ function DocsContent({ src, title, text, pos }) {
 
 export default function Docs({ docsData }) {
   return (
-    <section className="my-20">
+    <section className="py-10 bg-blue-100">
       <SectionHeader text="Dokumentasi" />
-      <div className="max-w-max mx-auto md:grid md:grid-cols-2 md:max-w-4xl md:gap-x-8 sm:justify-items-center xl:max-w-6xl">
+      <div className="max-w-max mx-auto md:grid md:grid-cols-2 md:max-w-4xl md:gap-x-8 sm:justify-items-center lg:max-w-5xl">
         {docsData?.map((el, key) => (
           <DocsContent
             key={el.id}

@@ -23,7 +23,7 @@ export default function EventsCard({
 }) {
   return (
     <div className="mx-4">
-      <div className="shadow-lg rounded-2xl w-[300px] overflow-hidden my-8 mx-auto">
+      <div className="bg-white/95 shadow-lg rounded-2xl w-[300px] overflow-hidden my-8 mx-auto">
         <div className="relative w-full h-52">
           <Image
             src={src}
