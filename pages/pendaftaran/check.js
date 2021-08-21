@@ -56,7 +56,7 @@ export default function Check() {
           Registration Check
         </h1>
 
-        <main className="mt-8">
+        <main className="mt-8 px-2">
           <div className="text-center text-sm font-medium">
             <h2>Apakah anda sudah mendaftar?</h2>
             <p>Cek disini</p>
@@ -68,13 +68,13 @@ export default function Check() {
                 `/pendaftaran/check?email=${emailRef.current.value}`
               );
             }}
-            className="flex mx-8 sm:mx-auto sm:max-w-sm justify-center rounded-sm ring-1 ring-[#004BA7] p-1 mt-5"
+            className="flex w-8/12 sm:w-6/12 mx-auto justify-center rounded-sm ring-1 ring-[#004BA7] p-1 mt-5"
           >
             <input
               ref={emailRef}
               type="text"
               placeholder="Masukkan alamat email"
-              className="text-center flex-1 outline-none text-sm sm:text-base"
+              className="text-center flex-1 outline-none text-sm sm:text-base overflow-hidden"
             />
             <button type="submit">
               <HiSearch className="h-5 w-5 text-gray-400 hover:text-black transition-colors" />
