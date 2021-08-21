@@ -27,7 +27,7 @@ function InputField({ label, Icon, ...props }) {
           {...props}
           type="text"
           autoComplete="off"
-          className="flex-1 p-1 outline-none text-sm sm:text-base"
+          className="flex-1 p-1 outline-none text-sm sm:text-base overflow-hidden"
         />
       </div>
       <ErrorMessage
