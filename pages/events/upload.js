@@ -10,6 +10,7 @@ export default function events_upload_page() {
               <input type="text" name="zoom" placeholder="url zoom"/>
               <input type="date" name="date" placeholder="date"/>
               <input type="date" name="open_date" placeholder="open_date"/>
+              <input type="text" name="key" placeholder="secret key"/>
               <input type="submit" value="Upload"/>
           </form>
       </div>
