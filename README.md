@@ -3,12 +3,14 @@ Uses supabase. Configure .env.local first.
 ```
 NEXT_PUBLIC_SUPABASE_URL=your supabase url
 NEXT_PUBLIC_SUPABASE_ANON_KEY=your anon key
+SECRET_KEY=key for page upload
+SMTP_HOST=hsmtp host
+SMTP_PORT=smtp port
+SMTP_USER=smtp user
+SMTP_PASS=smtp pass
 ```
 ## ERD
 ![ERD](https://raw.githubusercontent.com/Pemrograman-Fasilkom-Unej/postgre/back-end/docs/db.png)
-## to do
-- [ ] Auth
-- [ ] SMTP
 ## /api/presenters
 ### Params
 #### POST
