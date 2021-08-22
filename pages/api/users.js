@@ -65,6 +65,9 @@ async function getPartisipan(filter) {
 async function insertPartisipan(nama, email, whatsapp, asal, info, id_event) {
     //prevent register_date > event_date
     const events = await supabase.from("events").select("*").eq("id", parseInt(id_event))
+    if(events.body.length == 0) {
+        return 1;
+    }
     let date_event = new Date(events.body[0].date)
     let open_date = new Date(events.body[0].open_date)
     date_event.setHours(0, 0, -1) //set ke h-1 23.59 pendaftaran
@@ -166,6 +169,10 @@ export default async function partisipan(req, res) {
                 else if(result.data == -3) {
                     result.success = false;
                     result.message = "Nomor sudah terdaftar"
+                    result.data = []
+                } else if(result.data == 1) {
+                    result.success = false;
+                    result.message = "eventID not found"
                     result.data = []
                 }
             } else {
