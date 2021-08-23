@@ -50,11 +50,21 @@ export default async function upload_events(req, res) {
                     deleteP(req.file.filename)
                     return;
                 }
+                if(req.body.key != process.env.SECRET_KEY) {
+                    deleteP(req.file.filename)
+                        res.status(200).send({
+                            "status": 200,
+                            "success": false,
+                            "message": "Wrong key",
+                            "data": []
+                        });
+                    return
+                }
                 //cek param, desc is ok to be null
                 console.log(req.body)
                 if(req.body.title && req.body.date && req.body.open_date) {
                     const _res = await supabase.from(tableName).insert([
-                        {title: req.body.title, date: req.body.date, open_date: req.body.open_date, photo: "/assets/events/" + req.file.filename}
+                        {title: req.body.title, date: req.body.date, open_date: req.body.open_date, photo: "/assets/events/" + req.file.filename, zoom: req.body.zoom}
                     ])
                     if(_res.error) {
                         console.error(_res.error);
@@ -66,11 +76,19 @@ export default async function upload_events(req, res) {
                             "data": []
                         });
                     }
+                    //get id, update
+                    const id_event = _res.body[0].id
+                    const attendance = "https://postgre.pemro.id/attendance?eventId=" + id_event
+                    const update = await supabase.from(tableName).update(
+                        {attendance: attendance}
+                    ).match(
+                        {id: id_event}
+                    )
                     res.status(200).send({
                         "status": 200,
                         "success": true,
                         "message": "ok",
-                        "data": _res.body
+                        "data": update.body
                     })
                 } else {
                     deleteP(req.file.filename)

@@ -8,6 +8,7 @@ export default function docs_upload_page() {
               <input type="file" accept="image/*" name="photo"/>
               <input type="text" name="id_event" placeholder="id_event"/>
               <input type="text" name="desc" placeholder="desc"/>
+              <input type="text" name="key" placeholder="secret key"/>
               <input type="submit" value="Upload"/>
           </form>
       </div>

@@ -8,7 +8,9 @@ async function getEvents(filter) {
     title,
     date,
     open_date,
-    photo
+    photo,
+    attendance,
+    zoom
     `)
     if(filter) {
         if(filter.id) {
@@ -17,7 +19,9 @@ async function getEvents(filter) {
             title,
             date,
             open_date,
-            photo
+            photo,
+            attendance,
+            zoom
             `).eq("id", parseInt(filter.id))
         } else if(filter.year) {
             res.body = res.body.filter(function (value, index, array) {
@@ -41,12 +45,19 @@ async function getEvents(filter) {
     return res.body
 }
 
-async function insertEvents(title, date, open_date, photo) {
+async function insertEvents(title, date, open_date, photo, zoom) {
     const res = await supabase.from(tableName).insert([
-        {title:title, date:date, open_date: open_date, photo: photo}
+        {title:title, date:date, open_date: open_date, photo: photo, attendance: attendance, zoom: zoom}
     ])
     if(res.error)
         throw res.error;
+    //get id, then update attendance url
+    const id_event = res.body[0].id
+    const attendance = "https://postgre.pemro.id/attendance?eventId=" + id_event
+    const filter = {
+        id: id_event
+    }
+    updateEvents(filter, {attendance: attendance})
     return res.body;
 }
 
@@ -91,7 +102,7 @@ export default async function events(req, res) {
     switch(method) {
         case "POST":
             if(body.title && body.date && body.open_date && body.photo) {
-                result.data = await insertEvents(body.title, body.date, body.open_date, body.photo)
+                result.data = await insertEvents(body.title, body.date, body.open_date, body.photo, body.zoom)
             } else {
                 result.status = 400;
                 result.success = false;
@@ -107,7 +118,9 @@ export default async function events(req, res) {
                     title: body.title,
                     date: body.date,
                     open_date: body.open_date,
-                    photo: body.photo
+                    photo: body.photo,
+                    attendance: body.attendance,
+                    zoom: body.zoom
                 }
                 result.data = await updateEvents(body, newData)
             } else {
