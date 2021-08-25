@@ -17,9 +17,9 @@ export default async function events(req, res) {
     } = req;
     switch(method) {
         case "GET":
-            if(query.email && query.id) {
+            if(query.email && query.eventId) {
                 //get date 
-                const ev = await supabase.from("events").select("*").eq("attendance", "https://postgre.pemro.id/attendance?id=" + query.id)
+                const ev = await supabase.from("events").select("*").eq("attendance", "https://postgre.pemro.id/attendance?eventId=" + query.eventId)
                 if(ev.body.length == 0) {
                     //id not found
                     result.status = 200;
@@ -29,7 +29,13 @@ export default async function events(req, res) {
                     //found key, check date
                     let end_date = new Date(ev.body[0].date)
                     let start_date = new Date(ev.body[0].date)
-                    end_date.setHours(23, 59, 59)
+                    let sh = ev.body[0].open_attendance.split(":")
+                    let eh = ev.body[0].close_attendance.split(":")
+                    start_date.setHours(sh[0], sh[1], sh[2])
+                    end_date.setHours(eh[0], eh[1], eh[2])
+                    console.log(new Date())
+                    console.log(start_date)
+                    console.log(end_date)
                     if(new Date() <= end_date && new Date >= start_date) {
                         //ok, hadir
                         //cek kehadiran dulu, lek blm baru hadirkan
@@ -44,7 +50,7 @@ export default async function events(req, res) {
                                 result.message = "Sudah melakukan presensi"
                             } else {
                                 //belum presensi
-                                const presensi = await supabase.from(tableName).update({present: true}).eq("id_event", ev.body[0].id).eq("email", query.email)
+                                const presensi = await supabase.from(tableName).update({present: true, attendance_date: new Date()}).eq("id_event", ev.body[0].id).eq("email", query.email)
                                 if(presensi.error) {
                                     throw presensi.error;
                                 } else {

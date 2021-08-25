@@ -3,26 +3,10 @@ import { supabase } from "../../utils/supabase"
 const tableName = "events"
 
 async function getEvents(filter) {
-    let res = await supabase.from(tableName).select(`
-    id,
-    title,
-    date,
-    open_date,
-    photo,
-    attendance,
-    zoom
-    `)
+    let res = await supabase.from(tableName).select("*")
     if(filter) {
         if(filter.id) {
-            res = await supabase.from(tableName).select(`
-            id,
-            title,
-            date,
-            open_date,
-            photo,
-            attendance,
-            zoom
-            `).eq("id", parseInt(filter.id))
+            res = await supabase.from(tableName).select("*").eq("id", parseInt(filter.id))
         } else if(filter.year) {
             res.body = res.body.filter(function (value, index, array) {
                 return (value.date.split('-')[0] == filter.year);
@@ -45,12 +29,16 @@ async function getEvents(filter) {
     return res.body
 }
 
-async function insertEvents(title, date, open_date, photo, zoom) {
+async function insertEvents(data) {
+    if(data.open_attendance == null || data.open_attendance == undefined)
+        data.open_attendance = "07:00:00"
+    if(data.close_attendance == null || data.close_attendance == undefined)
+        data.close_attendance = "23:59:59"
     const res = await supabase.from(tableName).insert([
-        {title:title, date:date, open_date: open_date, photo: photo, attendance: attendance, zoom: zoom}
+        {title:data.title, date:data.date, open_date: data.open_date, photo: data.photo, attendance: data.attendance, zoom: data.zoom, open_attendance: data.open_attendance, close_attendance: data.close_attendance}
     ])
     if(res.error)
-        throw res.error;
+        return -1;
     //get id, then update attendance url
     const id_event = res.body[0].id
     const attendance = "https://postgre.pemro.id/attendance?eventId=" + id_event
@@ -102,7 +90,11 @@ export default async function events(req, res) {
     switch(method) {
         case "POST":
             if(body.title && body.date && body.open_date && body.photo) {
-                result.data = await insertEvents(body.title, body.date, body.open_date, body.photo, body.zoom)
+                result.data = await insertEvents(body)
+                if(result.data == -1) {
+                    result.success = false;
+                    result.message = "Something err happened"
+                }
             } else {
                 result.status = 400;
                 result.success = false;

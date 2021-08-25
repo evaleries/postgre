@@ -63,8 +63,10 @@ export default async function upload_events(req, res) {
                 //cek param, desc is ok to be null
                 console.log(req.body)
                 if(req.body.title && req.body.date && req.body.open_date) {
+                    req.body.open_attendance = (req.body.open_attendance == null || req.body.open_attendance == undefined) ? "07:00:00" : req.body.open_attendance
+                    req.body.close_attendance = (req.body.close_attendance == null || req.body.close_attendance == undefined) ? "23:59:59" : req.body.close_attendance
                     const _res = await supabase.from(tableName).insert([
-                        {title: req.body.title, date: req.body.date, open_date: req.body.open_date, photo: "/assets/events/" + req.file.filename, zoom: req.body.zoom}
+                        {title: req.body.title, date: req.body.date, open_date: req.body.open_date, photo: "/assets/events/" + req.file.filename, zoom: req.body.zoom, open_attendance: req.body.open_attendance, close_attendance: req.body.close_attendance}
                     ])
                     if(_res.error) {
                         console.error(_res.error);
