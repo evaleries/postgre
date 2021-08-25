@@ -23,7 +23,11 @@ module.exports = {
       150: '1.5',
       200: '2',
     },
-    extend: {},
+    extend: {
+      animation: {
+        'spin-slow': 'spin 50s linear infinite',
+      },
+    },
   },
   variants: {
     extend: {},
