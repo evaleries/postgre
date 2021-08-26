@@ -51,10 +51,13 @@ export default function Footer() {
         </FooterSection>
         <FooterSection>
           <FooterHeader text="Social Media" />
-          <a href="https://www.youtube.com/channel/UCtgRiN1tHOvmZXKQoBkTlwg">
+          <a
+            href="https://www.youtube.com/channel/UCtgRiN1tHOvmZXKQoBkTlwg"
+            target="_blank"
+          >
             <FooterContents Icon={FiYoutube} text="Lab. Pemro Official" />
           </a>
-          <a href="https://www.instagram.com/pemroilkom_unej">
+          <a href="https://www.instagram.com/pemroilkom_unej" target="_blank">
             <FooterContents Icon={FiInstagram} text="@pemroilkom_unej" />
           </a>
         </FooterSection>

@@ -66,7 +66,12 @@ export default function Pendaftaran() {
             <div className="bg-white shadow-md rounded-sm py-4 sm:px-4 m-2 flex-1 max-w-2xl">
               <div
                 className="absolute cursor-pointer hover:scale-110 active:scale-100 transition-transform"
-                onClick={() => router.push('/')}
+                onClick={() =>
+                  router.push({
+                    pathname: '/events',
+                    query: { eventId: router.query.eventId },
+                  })
+                }
               >
                 <HiChevronLeft className="mx-2 h-10 w-10 sm:h-12 sm:w-12 text-[#004BA7] hover:text-blue-500 transition-colors" />
               </div>

@@ -1,27 +1,6 @@
 import SectionHeader from './SectionHeader';
 import EventsCard from './EventsCard';
-
-const convertDate = (date) => {
-  const month = [
-    'Januari',
-    'Februari',
-    'Maret',
-    'April',
-    'Mei',
-    'Juni',
-    'Juli',
-    'Agustus',
-    'September',
-    'Oktober',
-    'November',
-    'Desember',
-  ];
-  return (
-    date.split('-')[2] +
-    ` ${month[date.split('-')[1] - 1]} ` +
-    date.split('-')[0]
-  );
-};
+import convertDate from '../../utils/convertDate';
 
 export default function Events({ eventsData }) {
   const now = new Date();
