@@ -36,25 +36,28 @@ export default function Footer() {
         </FooterSection>
         <FooterSection>
           <FooterHeader text="Contact Person" />
-          <a href={WA_BASE_URL + '+6282139997597'}>
+          <a href={WA_BASE_URL + '+6282139997597'} target="_blank">
             <FooterContents
               Icon={FaWhatsapp}
               text="Fakhrii +62 821 3999 7597"
             />
           </a>
-          <a href={WA_BASE_URL + '+6283847193167'}>
+          <a href={WA_BASE_URL + '+6283847193167'} target="_blank">
             <FooterContents Icon={FaWhatsapp} text="Wisnu +62 838 4719 3167" />
           </a>
-          <a href={WA_BASE_URL + '+62895630905343'}>
+          <a href={WA_BASE_URL + '+62895630905343'} target="_blank">
             <FooterContents Icon={FaWhatsapp} text="Mikli +62 895 6309 05343" />
           </a>
         </FooterSection>
         <FooterSection>
           <FooterHeader text="Social Media" />
-          <a href="https://www.youtube.com/channel/UCtgRiN1tHOvmZXKQoBkTlwg">
+          <a
+            href="https://www.youtube.com/channel/UCtgRiN1tHOvmZXKQoBkTlwg"
+            target="_blank"
+          >
             <FooterContents Icon={FiYoutube} text="Lab. Pemro Official" />
           </a>
-          <a href="https://www.instagram.com/pemroilkom_unej">
+          <a href="https://www.instagram.com/pemroilkom_unej" target="_blank">
             <FooterContents Icon={FiInstagram} text="@pemroilkom_unej" />
           </a>
         </FooterSection>

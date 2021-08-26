@@ -1,32 +1,11 @@
 import SectionHeader from './SectionHeader';
 import EventsCard from './EventsCard';
-
-const convertDate = (date) => {
-  const month = [
-    'Januari',
-    'Februari',
-    'Maret',
-    'April',
-    'Mei',
-    'Juni',
-    'Juli',
-    'Agustus',
-    'September',
-    'Oktober',
-    'November',
-    'Desember',
-  ];
-  return (
-    date.split('-')[2] +
-    ` ${month[date.split('-')[1] - 1]} ` +
-    date.split('-')[0]
-  );
-};
+import convertDate from '../../utils/convertDate';
 
 export default function Events({ eventsData }) {
   const now = new Date();
   return (
-    <section id="events" className="py-10 bg-blue-100">
+    <section id="events" className="py-10">
       <SectionHeader text="Acara Postgre" />
       <div className="max-w-max mx-auto flex flex-wrap justify-evenly sm:max-w-4xl xl:max-w-6xl">
         {eventsData?.map((el) => {

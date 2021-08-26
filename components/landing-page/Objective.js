@@ -14,9 +14,9 @@ export default function Objective() {
             height={1080}
             className="z-10"
           />
-          <div className="absolute h-56 w-56 md:h-72 md:w-72 xl:h-96 xl:w-96 -right-20 top-0 rounded-full bg-blue-400/60 z-0"></div>
+          <div className="absolute h-56 w-56 md:h-72 md:w-72 xl:h-96 xl:w-96 -right-20 top-0 rounded-full bg-blue-100"></div>
         </div>
-        <div className="flex-1 xl:text-xl 2xl:text-2xl px-4 z-10">
+        <div className="relative flex-1 xl:text-xl 2xl:text-2xl px-4">
           <p>
             Pemro Share, Talk, and Greet <strong>(POSTGRE)</strong> adalah
             kegiatan yang diselenggarakan setahun sekali sejak 2020 untuk

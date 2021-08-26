@@ -13,7 +13,7 @@ export default function PresentersCard({ src, name, info }) {
             objectPosition="center"
           />
         </div>
-        <div className="p-4 text-center">
+        <div className="p-4 text-center bg-white/95">
           <h3 className="text-lg font-medium mb-1 lg:text-xl">{name}</h3>
           <p className="text-sm font-medium px-2">{info}</p>
         </div>

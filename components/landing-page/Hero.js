@@ -9,7 +9,7 @@ export default function Hero() {
     <div id="home" className="bg-hero">
       <Nav />
       <div className="pb-40 2xl:pb-56 relative">
-        <div className="max-w-max mt-10 mx-auto flex flex-col justify-center items-center sm:max-w-4xl lg:items-start lg:justify-between lg:flex-row xl:max-w-6xl">
+        <div className="max-w-max mt-10 mx-auto flex flex-col justify-center items-center sm:max-w-4xl lg:justify-between lg:flex-row xl:max-w-6xl">
           <Swiper
             spaceBetween={50}
             slidesPerView="auto"
@@ -73,7 +73,7 @@ export default function Hero() {
             </button>
           </header>
         </div>
-        <div className="hidden lg:inline absolute right-0 mt-8 bg-[#0F54AE] text-white pl-14 pr-20 py-3 rounded-bl-3xl 2xl:text-xl">
+        <div className="hidden lg:inline absolute right-0 mt-8 bg-[#0F54AE] text-white pl-14 pr-20 py-3 rounded-bl-3xl 2xl:hidden">
           Upcoming Event
         </div>
       </div>

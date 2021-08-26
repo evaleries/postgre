@@ -19,14 +19,14 @@ function DocsContent({ src, title, text, pos }) {
         />
       </div>
       <h3 className="mt-4 text-lg font-semibold">{title}</h3>
-      <p>{text}</p>
+      <p className="font-medium">{text}</p>
     </div>
   );
 }
 
 export default function Docs({ docsData }) {
   return (
-    <section className="py-10 bg-blue-100">
+    <section className="py-10">
       <SectionHeader text="Dokumentasi" />
       <div className="max-w-max mx-auto md:grid md:grid-cols-2 md:max-w-4xl md:gap-x-8 sm:justify-items-center lg:max-w-5xl">
         {docsData?.map((el, key) => (

@@ -53,7 +53,7 @@ export default function EventsCard({
           )}
         </div>
         {underway ? (
-          <Link href={`/pendaftaran?eventId=${eventId}`}>
+          <Link href={`/events?eventId=${eventId}`}>
             <button className="font-sans2 font-bold bg-[#004BA7] text-white transition-all shadow-md w-full py-3 mt-1 hover:bg-[#99A8BB] active:text-gray-300">
               Daftar Sekarang
             </button>

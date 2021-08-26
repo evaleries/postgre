@@ -1,31 +1,10 @@
 import Head from 'next/head';
-import { HiChevronLeft, HiSearch } from 'react-icons/hi';
-import { useRef } from 'react';
-import Tickets from '../../components/registration-check/Tickets';
 import { useRouter } from 'next/router';
+import { useRef } from 'react';
+import { HiChevronLeft, HiSearch } from 'react-icons/hi';
+import Tickets from '../../components/registration-check/Tickets';
+import convertDate from '../../utils/convertDate';
 import useSWR from 'swr';
-
-const convertDate = (date) => {
-  const month = [
-    'Januari',
-    'Februari',
-    'Maret',
-    'April',
-    'Mei',
-    'Juni',
-    'Juli',
-    'Agustus',
-    'September',
-    'Oktober',
-    'November',
-    'Desember',
-  ];
-  return (
-    date.split('-')[2] +
-    ` ${month[date.split('-')[1] - 1]} ` +
-    date.split('-')[0]
-  );
-};
 
 export default function Check() {
   const emailRef = useRef();
