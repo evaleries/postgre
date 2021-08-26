@@ -13,6 +13,14 @@ export default function events_upload_page() {
               <input type="text" name="title" placeholder="title"/>
               <br></br>
               <br></br>
+              <h4>desc</h4>
+              <input type="text" name="desc" placeholder="deskripsi"/>
+              <br></br>
+              <br></br>
+              <h4>waktu acara mulai</h4>
+              <input type="time" step="1" name="start_time" placeholder="start_time"/>
+              <br></br>
+              <br></br>
               <h4>url zoom</h4>
               <input type="text" name="zoom" placeholder="url zoom"/>
               <br></br>
