@@ -55,12 +55,12 @@ export default function EventsCard({
         {underway ? (
           <Link href={`/events?eventId=${eventId}`}>
             <button className="font-sans2 font-bold bg-[#004BA7] text-white transition-all shadow-md w-full py-3 mt-1 hover:bg-[#99A8BB] active:text-gray-300">
-              Daftar Sekarang
+              Lihat Event
             </button>
           </Link>
         ) : (
           <button className="font-sans2 font-bold bg-gray-600 hover:bg-gray-700 text-white transition-all shadow-md w-full py-3 mt-1 active:text-gray-300">
-            Daftar Sekarang
+            Lihat Event
           </button>
         )}
       </div>

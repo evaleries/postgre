@@ -1,7 +1,6 @@
 import Head from 'next/head';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
-import { useEffect } from 'react';
 import EventDescription from '../../components/events-detail/EventDescription';
 import EventHeader from '../../components/events-detail/EventHeader';
 import EventHero from '../../components/events-detail/EventHero';
@@ -10,16 +9,14 @@ import useSWR from 'swr';
 
 export default function Events() {
   const router = useRouter();
-
   const { eventId } = router.query;
-
-  const { data: eventsData } = useSWR(`/api/events`);
-  const { data: presentersData } = useSWR('/api/presenters');
-
-  const filteredEventsData = eventsData?.data.find((el) => el.id == eventId);
-  const filteredPresentersData = presentersData?.data.filter(
-    (el) => el.id_event == eventId
+  let { data: eventsData } = useSWR(
+    eventId ? `/api/events?eventId=${eventId}` : null
   );
+  let { data: presentersData } = useSWR('/api/presenters');
+
+  eventsData = eventsData?.data[0];
+  presentersData = presentersData?.data.filter((el) => el.id_event == eventId);
 
   return (
     <div className="overflow-hidden">
@@ -27,7 +24,7 @@ export default function Events() {
         <title>POSTGRE 2021 | Pendaftaran Event</title>
       </Head>
 
-      <EventHero imageUrl={filteredEventsData?.photo} />
+      <EventHero imageUrl={eventsData?.photo} />
 
       <div className="min-h-screen bg-blue-50/30 relative max-w-7xl mx-auto">
         {/* Ornament */}
@@ -65,13 +62,14 @@ export default function Events() {
         </div>
 
         {/* Content */}
-        <main className="p-8 max-w-6xl mx-auto">
+        <main className="relative p-8 max-w-6xl mx-auto">
           <EventHeader
-            title={filteredEventsData?.title}
-            date={filteredEventsData?.date}
+            title={eventsData?.title}
+            date={eventsData?.date}
+            startTime={eventsData?.start_time}
           />
-          <EventDescription />
-          <EventPresenters presentersData={filteredPresentersData} />
+          <EventDescription desc={eventsData?.desc} />
+          <EventPresenters presentersData={presentersData} />
         </main>
       </div>
     </div>
