@@ -13,13 +13,13 @@ export default function Events() {
 
   const { eventId } = router.query;
 
-  const { data: eventsData } = useSWR(`/api/events`);
-  const { data: presentersData } = useSWR('/api/presenters');
-
-  const filteredEventsData = eventsData?.data.find((el) => el.id == eventId);
-  const filteredPresentersData = presentersData?.data.filter(
-    (el) => el.id_event == eventId
+  let { data: eventsData } = useSWR(
+    eventId ? `/api/events?eventId=${eventId}` : null
   );
+  eventsData = eventsData?.data[0];
+
+  let { data: presentersData } = useSWR('/api/presenters');
+  presentersData = presentersData?.data.filter((el) => el.id_event == eventId);
 
   return (
     <div className="overflow-hidden">
@@ -27,7 +27,7 @@ export default function Events() {
         <title>POSTGRE 2021 | Pendaftaran Event</title>
       </Head>
 
-      <EventHero imageUrl={filteredEventsData?.photo} />
+      <EventHero imageUrl={eventsData?.photo} />
 
       <div className="min-h-screen bg-blue-50/30 relative max-w-7xl mx-auto">
         {/* Ornament */}
@@ -66,12 +66,9 @@ export default function Events() {
 
         {/* Content */}
         <main className="p-8 max-w-6xl mx-auto">
-          <EventHeader
-            title={filteredEventsData?.title}
-            date={filteredEventsData?.date}
-          />
+          <EventHeader title={eventsData?.title} date={eventsData?.date} />
           <EventDescription />
-          <EventPresenters presentersData={filteredPresentersData} />
+          <EventPresenters presentersData={presentersData} />
         </main>
       </div>
     </div>

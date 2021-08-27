@@ -14,8 +14,8 @@ export default function EventHero({ imageUrl }) {
         objectPosition="center"
       />
       <div
-        className="absolute left-10 top-8 bg-white rounded-full cursor-pointer hover:scale-105 active:scale-100 active:bg-gray-200 transition-transform shadow-md"
-        onClick={() => router.push('/')}
+        className="absolute left-4 sm:left-10 top-8 bg-white rounded-full cursor-pointer hover:scale-105 active:scale-100 active:bg-gray-200 transition-transform shadow-md"
+        onClick={() => router.back()}
       >
         <HiChevronLeft className="h-10 w-10 pr-1 text-[#004BA7]" />
       </div>

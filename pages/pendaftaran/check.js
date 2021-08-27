@@ -23,7 +23,7 @@ export default function Check() {
       <div className="min-h-[400px] m-2 flex-1 bg-white py-4 sm:px-4 shadow-md rounded-sm max-w-3xl">
         <div
           className="absolute cursor-pointer hover:scale-110 active:scale-100 transition-transform"
-          onClick={() => router.push('/pendaftaran')}
+          onClick={() => router.back()}
         >
           <HiChevronLeft className="mx-2 h-10 w-10 sm:h-12 sm:w-12 text-[#004BA7] hover:text-blue-500 transition-colors" />
         </div>
