@@ -1,6 +1,6 @@
 import Image from 'next/image';
 
-function PresentersCard({ src, name, info }) {
+function PresentersCard({ src, name, position, place }) {
   return (
     <div className="mb-4 w-max mx-auto sm:mx-0 sm:flex sm:flex-row sm:justify-start sm:items-center">
       <div className="h-48 w-48 relative hover:scale-105 active:scale-100 transition-transform">
@@ -19,11 +19,11 @@ function PresentersCard({ src, name, info }) {
         </div>
         <div className="leading-tight">
           <h3>Jabatan</h3>
-          <p className="text-xl text-[#004BA7] font-semibold">{info}</p>
+          <p className="text-xl text-[#004BA7] font-semibold">{position}</p>
         </div>
         <div className="leading-tight">
           <h3>Tempat Kerja</h3>
-          <p className="text-xl text-[#004BA7] font-semibold">{info}</p>
+          <p className="text-xl text-[#004BA7] font-semibold">{place}</p>
         </div>
       </div>
     </div>
@@ -42,7 +42,8 @@ export default function EventPresenters({ presentersData }) {
             key={el.id}
             src={el.photo}
             name={el.name}
-            info={el.desc}
+            position={el.position}
+            place={el.workplace}
           />
         ))}
       </div>

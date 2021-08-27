@@ -1,7 +1,6 @@
 import Head from 'next/head';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
-import { useEffect } from 'react';
 import EventDescription from '../../components/events-detail/EventDescription';
 import EventHeader from '../../components/events-detail/EventHeader';
 import EventHero from '../../components/events-detail/EventHero';
@@ -10,15 +9,13 @@ import useSWR from 'swr';
 
 export default function Events() {
   const router = useRouter();
-
   const { eventId } = router.query;
-
   let { data: eventsData } = useSWR(
     eventId ? `/api/events?eventId=${eventId}` : null
   );
-  eventsData = eventsData?.data[0];
-
   let { data: presentersData } = useSWR('/api/presenters');
+
+  eventsData = eventsData?.data[0];
   presentersData = presentersData?.data.filter((el) => el.id_event == eventId);
 
   return (
@@ -65,9 +62,13 @@ export default function Events() {
         </div>
 
         {/* Content */}
-        <main className="p-8 max-w-6xl mx-auto">
-          <EventHeader title={eventsData?.title} date={eventsData?.date} />
-          <EventDescription />
+        <main className="relative p-8 max-w-6xl mx-auto">
+          <EventHeader
+            title={eventsData?.title}
+            date={eventsData?.date}
+            startTime={eventsData?.start_time}
+          />
+          <EventDescription desc={eventsData?.desc} />
           <EventPresenters presentersData={presentersData} />
         </main>
       </div>

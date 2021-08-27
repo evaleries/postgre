@@ -2,7 +2,7 @@ import { HiOutlineCalendar, HiOutlineLocationMarker } from 'react-icons/hi';
 import { useRouter } from 'next/router';
 import convertDate from '../../utils/convertDate';
 
-export default function EventHeader({ title, date }) {
+export default function EventHeader({ title, date, startTime }) {
   const router = useRouter();
   return (
     <div className="relative md:flex items-center justify-between">
@@ -39,7 +39,9 @@ export default function EventHeader({ title, date }) {
           </div>
           <div className="inline-flex">
             <HiOutlineCalendar className="h-5 w-5 ml-4 mr-2" />
-            <p>{date && convertDate(date)}</p>
+            <p>
+              {date && convertDate(date)} - {startTime}
+            </p>
           </div>
         </div>
       </div>
