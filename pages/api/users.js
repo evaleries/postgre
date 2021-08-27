@@ -1,4 +1,5 @@
 import {supabase} from '../../utils/supabase'
+import { sendmail } from '../../utils/nodemailer'
 
 const tableName = "users"
 
@@ -64,6 +65,9 @@ async function getPartisipan(filter) {
 async function insertPartisipan(nama, email, whatsapp, asal, info, id_event) {
     //prevent register_date > event_date
     const events = await supabase.from("events").select("*").eq("id", parseInt(id_event))
+    if(events.body.length == 0) {
+        return 1;
+    }
     let date_event = new Date(events.body[0].date)
     let open_date = new Date(events.body[0].open_date)
     date_event.setHours(0, 0, -1) //set ke h-1 23.59 pendaftaran
@@ -88,6 +92,7 @@ async function insertPartisipan(nama, email, whatsapp, asal, info, id_event) {
     ])
     if(res.error)
         throw res.error;
+    sendmail(email, events.body[0].title, "header text goes here", '<img src="https://i.ppy.sh/7a9fe4885ddf462b2ac23366cd144682575f1949/68747470733a2f2f63646e2e646973636f72646170702e636f6d2f6174746163686d656e74732f3631303337373137333238363531383831362f3636363138333531393739333331353835312f417175614e65655f2e35782e706e67"><img src="https://i.ppy.sh/7a9fe4885ddf462b2ac23366cd144682575f1949/68747470733a2f2f63646e2e646973636f72646170702e636f6d2f6174746163686d656e74732f3631303337373137333238363531383831362f3636363138333531393739333331353835312f417175614e65655f2e35782e706e67"><img src="https://i.ppy.sh/7a9fe4885ddf462b2ac23366cd144682575f1949/68747470733a2f2f63646e2e646973636f72646170702e636f6d2f6174746163686d656e74732f3631303337373137333238363531383831362f3636363138333531393739333331353835312f417175614e65655f2e35782e706e67">')
     return res.body;
 }
 
@@ -164,6 +169,10 @@ export default async function partisipan(req, res) {
                 else if(result.data == -3) {
                     result.success = false;
                     result.message = "Nomor sudah terdaftar"
+                    result.data = []
+                } else if(result.data == 1) {
+                    result.success = false;
+                    result.message = "eventID not found"
                     result.data = []
                 }
             } else {

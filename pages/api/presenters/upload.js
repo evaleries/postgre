@@ -50,10 +50,20 @@ export default async function upload(req, res) {
                     deleteP(req.file.filename)
                     return;
                 }
+                if(req.body.key != process.env.SECRET_KEY) {
+                    deleteP(req.file.filename)
+                        res.status(200).send({
+                            "status": 200,
+                            "success": false,
+                            "message": "Wrong key",
+                            "data": []
+                        });
+                    return
+                }
                 //cek param, desc is ok to be null
-                if(req.body.name && req.body.id_event) {
+                if(req.body.name && req.body.id_event && req.body.position && req.body.workplace) {
                     const _res = await supabase.from(tableName).insert([
-                        {name: req.body.name, photo: "/assets/presenters/" + req.file.filename, desc: req.body.desc, id_event: req.body.id_event}
+                        {name: req.body.name, photo: "/assets/presenters/" + req.file.filename, desc: req.body.desc, id_event: req.body.id_event, position: req.body.position, workplace: req.body.workplace}
                     ])
                     if(_res.error) {
                         console.error(_res.error);
