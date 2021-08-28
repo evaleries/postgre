@@ -28,7 +28,7 @@ export default function EventHeader({ title, date, startTime }) {
       </div>
 
       {/* Information */}
-      <div className="space-y-2">
+      <div className="space-y-4">
         <h1 className="text-3xl sm:text-4xl text-[#004BA7] font-bold text-center mx-auto max-w-lg md:text-left">
           {title}
         </h1>

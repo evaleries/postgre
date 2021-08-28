@@ -10,13 +10,13 @@ export default function Nav() {
 
       <ul className="hidden sm:flex space-x-4 text-white font-medium">
         <li className="hover:scale-105 active:scale-100 transition-transform">
-          <a href="#home">Home</a>
+          <a href="#objective">Tujuan</a>
         </li>
         <li className="hover:scale-105 active:scale-100 transition-transform">
           <a href="#events">Acara</a>
         </li>
         <li className="hover:scale-105 active:scale-100 transition-transform">
-          <a href="#presenters">Pemateri</a>
+          <a href="#docs">Dokumentasi</a>
         </li>
       </ul>
 

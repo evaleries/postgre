@@ -3,7 +3,7 @@ import Image from 'next/image';
 
 export default function Objective() {
   return (
-    <section className="my-20">
+    <section className="my-20" id="objective">
       <SectionHeader text="Tujuan Postgre" />
       <div className="max-w-max mx-auto flex flex-col items-center justify-between sm:max-w-5xl md:flex-row xl:max-w-6xl">
         <div className="w-10/12 relative max-w-4xl my-4 md:w-7/12 md:order-1 lg:w-6/12">
