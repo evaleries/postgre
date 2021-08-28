@@ -15,6 +15,20 @@ export default function Events() {
   );
   let { data: presentersData } = useSWR('/api/presenters');
 
+  // Loading
+  if (!eventsData || !presentersData) {
+    return (
+      <div className="min-h-screen flex justify-center items-center bg-blue-50/30">
+        <Head>
+          <title>Postgre 2021 | Loading</title>
+        </Head>
+        <h1 className="animate-bounce text-lg font-semibold font-mono text-[#004BA7]">
+          Loading...
+        </h1>
+      </div>
+    );
+  }
+
   eventsData = eventsData?.data[0];
   presentersData = presentersData?.data.filter((el) => el.id_event == eventId);
 
