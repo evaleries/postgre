@@ -2,6 +2,17 @@ import { supabase } from "../../utils/supabase"
 
 const tableName = "events"
 
+function format12(time) {
+    let hours = time.getHours()
+    let minutes = time.getMinutes()
+    let fmt = hours >= 12 ? "PM" : "AM"
+    hours = hours % 12
+    hours = hours ? hours : 12
+    hours = hours < 10 ? '0' + hours : hours
+    minutes = minutes < 10 ? '0' + minutes : minutes
+    return `${hours}:${minutes} ${fmt}`
+}
+
 async function getEvents(filter) {
     let res = await supabase.from(tableName).select("*")
     if(filter) {
@@ -21,6 +32,10 @@ async function getEvents(filter) {
     let presenters = await supabase.from("presenters").select("*")
     for(var i=0;i<res.body.length;i++) {
         let _ = []
+        //start time cv
+        let d = new Date()
+        d.setHours(parseInt(res.body[i].start_time.split(":")[0]), parseInt(res.body[i].start_time.split(":")[1]))
+        res.body[i].start_time = format12(d)
         for(var j=0;j<presenters.body.length;j++) {
             if(res.body[i].id == presenters.body[j].id_event) {
                 _.push(presenters.body[j].name)
