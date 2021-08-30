@@ -32,9 +32,21 @@ export default async function upload_events(req, res) {
                         fields.desc[0] = fields.desc[0] ? fields.desc[0] : "Lorem Ipsum"
                         //fill starttime
                         fields.start_time[0] = fields.start_time[0] ? fields.start_time[0] : "08:00:00"
+
+                        //upload to supabase storage
+                        let buf = fs.readFileSync(files.photo[0].path)
+                        let [_h, _m, _s] = new Date().toTimeString().split(' ')[0].split(':')
+                        let pid = "-" + _h + "-" + _m + "-" + _s
+                        let extension = files.photo[0].originalFilename.split('.').pop()
+                        let filename = files.photo[0].originalFilename.split('.')
+                        filename.splice(filename.length - 1, 1)
+                        filename = filename.join(".") + pid + "." + extension
+                        await supabase.storage.from(bucket).upload(dest + filename, buf)
+                        //get public url
+                        let publicURL = await supabase.storage.from(bucket).getPublicUrl(dest + filename).publicURL
                     
                         let _res = await supabase.from(tableName).insert([
-                            {title: fields.title[0], date: fields.date[0], open_date: fields.open_date[0], photo: dest + files.photo[0].originalFilename, zoom: fields.zoom[0], open_attendance: fields.open_attendance[0], close_attendance: fields.close_attendance[0], desc: fields.desc[0], start_time: fields.start_time[0]}
+                            {title: fields.title[0], date: fields.date[0], open_date: fields.open_date[0], photo: publicURL, zoom: fields.zoom[0], open_attendance: fields.open_attendance[0], close_attendance: fields.close_attendance[0], desc: fields.desc[0], start_time: fields.start_time[0]}
                         ])
                         if(_res.error) {
                             console.error(_res.error);
@@ -55,10 +67,6 @@ export default async function upload_events(req, res) {
                         ).match(
                             {id: id_event}
                         )
-
-                        //upload to supabase storage
-                        let buf = fs.readFileSync(files.photo[0].path)
-                        await supabase.storage.from(bucket).upload(dest + files.photo[0].originalFilename, buf)
 
                         res.status(200).send({
                             "status": 200,

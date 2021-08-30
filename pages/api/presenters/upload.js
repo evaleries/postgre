@@ -24,8 +24,21 @@ export default async function upload_presenters(req, res) {
             await form.parse(req, async function (err, fields, files) {
                 if(fields.key[0] == process.env.SECRET_KEY) {
                     if(fields.name[0] && fields.id_event[0] && fields.position[0] && fields.workplace[0]) {
+
+                        //upload to supabase storage
+                        let buf = fs.readFileSync(files.photo[0].path)
+                        let [_h, _m, _s] = new Date().toTimeString().split(' ')[0].split(':')
+                        let pid = "-" + _h + "-" + _m + "-" + _s
+                        let extension = files.photo[0].originalFilename.split('.').pop()
+                        let filename = files.photo[0].originalFilename.split('.')
+                        filename.splice(filename.length - 1, 1)
+                        filename = filename.join(".") + pid + "." + extension
+                        await supabase.storage.from(bucket).upload(dest + filename, buf)
+                        //get public url
+                        let publicURL = await supabase.storage.from(bucket).getPublicUrl(dest + filename).publicURL
+
                         const _res = await supabase.from(tableName).insert([
-                            {name: fields.name[0], photo: dest + files.photo[0].originalFilename, desc: fields.desc[0], id_event: fields.id_event[0], position: fields.position[0], workplace: fields.workplace[0]}
+                            {name: fields.name[0], photo: publicURL, desc: fields.desc[0], id_event: fields.id_event[0], position: fields.position[0], workplace: fields.workplace[0]}
                         ])
                         if(_res.error) {
                             console.error(_res.error);
@@ -38,10 +51,6 @@ export default async function upload_presenters(req, res) {
                             });
                         }
 
-                        //upload to supabase storage
-                        let buf = fs.readFileSync(files.photo[0].path)
-                        await supabase.storage.from(bucket).upload(dest + files.photo[0].originalFilename, buf)
-                        
                         res.status(200).send({
                             "status": 200,
                             "success": true,
