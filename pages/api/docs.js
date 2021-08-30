@@ -1,5 +1,5 @@
 import { supabase } from "../../utils/supabase"
-import { getPhoto } from "../../utils/getphoto";
+import { getPhoto } from "../../utils/getPhoto";
 
 const tableName = "docs"
 
