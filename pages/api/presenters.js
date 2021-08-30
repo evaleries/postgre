@@ -1,4 +1,5 @@
 import {supabase} from '../../utils/supabase'
+import { getPhoto } from "../../utils/getphoto";
 
 const tableName = "presenters"
 
@@ -26,6 +27,11 @@ async function getPemateri(filter) {
     }
     if(res.error)
         throw res.error;
+
+    //convert relative to absolute url supabase storage
+    for(var i=0;i<res.body.length;i++) {
+        res.body[i].photo = await getPhoto(res.body[i].photo) || "/"
+    }
     return res.body;
 }
 

@@ -1,6 +1,6 @@
 import { supabase } from '../../../utils/supabase';
-import multer from 'multer'
 import fs from 'fs'
+const multiparty = require("multiparty")
 
 //we need to disable bodyPraser in order uploading file, hence we need seperate post url
 export const config = {
@@ -10,25 +10,8 @@ export const config = {
 };
 
 const tableName = "docs"
-
-const dest = "public/assets/docs";
-
-const up = multer({
-    storage: multer.diskStorage({
-        destination: function(req, file, cb) {
-            cb(null, dest)
-        },
-        filename: (req, file, cb) => cb(null, file.originalname)
-    })
-})
-
-function deleteP(file) {
-    try {
-        fs.unlinkSync(dest + "/" + file)
-    } catch (error) {
-        console.error(error)
-    }
-}
+const bucket = "postgre"
+const dest = "docs/"
 
 export default async function upload_docs(req, res) {
     const {
@@ -37,61 +20,50 @@ export default async function upload_docs(req, res) {
     } = req;
     switch(method) {
         case "POST":
-            up.single("photo")(req, {}, async function(err) {
-                try {
-                    req.body = JSON.parse(JSON.stringify(req.body))
-                } catch (error) {
-                    res.status(400).send({
-                        "status": 400,
-                        "success": false,
-                        "message": "Invalid JSON",
-                        "data": []
-                    });
-                    deleteP(req.file.filename)
-                    return;
-                }
-                if(req.body.key != process.env.SECRET_KEY) {
-                    deleteP(req.file.filename)
+            let form = new multiparty.Form()
+            await form.parse(req, async function (err, fields, files) {
+                if(fields.key[0] == process.env.SECRET_KEY) {
+                    if(fields.id_event[0] && fields.desc[0]) {
+                        let _res = await supabase.from(tableName).insert([
+                            {id_event: fields.id_event[0], desc:fields.desc[0], photo: dest + files.photo[0].originalFilename}
+                        ])
+                        if(_res.error) {
+                            console.error(_res.error);
+                            res.status(400).send({
+                                "status": 400,
+                                "success": false,
+                                "message": "An error occured",
+                                "data": []
+                            });
+                        }
+                        //upload to supabase storage
+                        let buf = fs.readFileSync(files.photo[0].path)
+                        await supabase.storage.from(bucket).upload(dest + files.photo[0].originalFilename, buf)
+                
                         res.status(200).send({
                             "status": 200,
-                            "success": false,
-                            "message": "Wrong key",
-                            "data": []
-                        });
-                    return
-                }
-                //cek param, desc is ok to be null
-                if(req.body.id_event && req.body.desc) {
-                    const _res = await supabase.from(tableName).insert([
-                        {id_event: req.body.id_event, desc:req.body.desc, photo: "/assets/docs/" + req.file.filename}
-                    ])
-                    if(_res.error) {
-                        console.error(_res.error);
-                        deleteP(req.file.filename)
+                            "success": true,
+                            "message": "ok",
+                            "data": _res.body
+                        })
+                    } else {
                         res.status(400).send({
                             "status": 400,
                             "success": false,
-                            "message": "An error occured",
+                            "message": "Invalid Parameter",
                             "data": []
                         });
                     }
+                } else {
                     res.status(200).send({
                         "status": 200,
-                        "success": true,
-                        "message": "ok",
-                        "data": _res.body
-                    })
-                } else {
-                    deleteP(req.file.filename)
-                    res.status(400).send({
-                        "status": 400,
                         "success": false,
-                        "message": "Invalid Parameter",
+                        "message": "Wrong key",
                         "data": []
                     });
                 }
             })
-            break;
+            break
         default:
             res.status(405).send({
                 "status": 405,
