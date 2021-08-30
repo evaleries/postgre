@@ -49,9 +49,6 @@ export default async function upload_docs(req, res) {
                                 "data": []
                             });
                         }
-                        //upload to supabase storage
-                        let buf = fs.readFileSync(files.photo[0].path)
-                        await supabase.storage.from(bucket).upload(dest + files.photo[0].originalFilename, buf)
                 
                         res.status(200).send({
                             "status": 200,
