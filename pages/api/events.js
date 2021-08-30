@@ -39,7 +39,7 @@ async function getEvents(filter) {
         res.body[i].start_time = format12(d)
 
         //convert relative to absolute url supabase storage
-        res.body[i].photo = await getPhoto(res.body[i].photo)
+        res.body[i].photo = await getPhoto(res.body[i].photo) || "/"
 
         for(var j=0;j<presenters.body.length;j++) {
             if(res.body[i].id == presenters.body[j].id_event) {
