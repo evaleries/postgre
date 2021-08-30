@@ -70,11 +70,6 @@ async function getDocs(filter) {
     }
     if(res.error)
         throw res.error
-
-    //convert relative to absolute url supabase storage
-    for(var i=0;i<res.body.length;i++) {
-        res.body[i].photo = await getPhoto(res.body[i].photo) || "/"
-    }
     return res.body
 }
 
