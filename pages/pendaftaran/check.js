@@ -20,7 +20,7 @@ export default function Check() {
       <Head>
         <title>POSTGRE 2021 | Registration checck</title>
       </Head>
-      <div className="min-h-[400px] m-2 flex-1 bg-white py-4 sm:px-4 shadow-md rounded-sm max-w-3xl">
+      <div className="min-h-[400px] m-2 flex-1 bg-white py-4 sm:px-4 shadow-md rounded-xl max-w-3xl">
         <div
           className="absolute cursor-pointer hover:scale-110 active:scale-100 transition-transform"
           onClick={() => router.back()}

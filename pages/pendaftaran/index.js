@@ -63,7 +63,7 @@ export default function Pendaftaran() {
           }}
         >
           {({ setFieldValue }) => (
-            <div className="bg-white shadow-md rounded-sm py-4 sm:px-4 m-2 flex-1 max-w-2xl">
+            <div className="bg-white shadow-md rounded-xl py-4 sm:px-4 m-2 flex-1 max-w-2xl">
               <div
                 className="absolute cursor-pointer hover:scale-110 active:scale-100 transition-transform"
                 onClick={() => router.back()}

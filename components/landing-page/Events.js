@@ -7,7 +7,7 @@ export default function Events({ eventsData }) {
   return (
     <section id="events" className="py-10">
       <SectionHeader text="Acara Postgre" />
-      <div className="max-w-max mx-auto flex flex-wrap justify-evenly sm:max-w-4xl xl:max-w-6xl">
+      <div className="max-w-max mx-auto flex flex-wrap justify-evenly sm:max-w-4xl xl:max-w-6xl items-stretch">
         {eventsData?.map((el) => {
           return (
             <EventsCard
