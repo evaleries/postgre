@@ -4,7 +4,7 @@ import SwiperCore, { Navigation, EffectCoverflow, Autoplay } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
 SwiperCore.use([Navigation, EffectCoverflow, Autoplay]);
-export default function Hero() {
+export default function Hero({ eventsData }) {
   return (
     <div id="home" className="bg-hero">
       <Nav />
@@ -26,39 +26,18 @@ export default function Hero() {
             }}
             className="lg:order-1 w-11/12 md:w-5/12 max-w-2xl rounded-lg relative"
           >
-            <SwiperSlide className="shadow-lg">
-              <Image
-                src="/assets/hero-img.jpg"
-                alt="Postgre"
-                layout="responsive"
-                width={1920}
-                height={1080}
-                className="rounded-lg bg-red-600"
-                priority
-              />
-            </SwiperSlide>
-            <SwiperSlide className="shadow-md">
-              <Image
-                src="/assets/DocsPostgre20201.png"
-                alt="Postgre"
-                layout="responsive"
-                width={1920}
-                height={1080}
-                className="rounded-lg shadow-md"
-                priority
-              />
-            </SwiperSlide>
-            <SwiperSlide>
-              <Image
-                src="/assets/DocsPostgre20202.png"
-                alt="Postgre"
-                layout="responsive"
-                width={1920}
-                height={1080}
-                className="rounded-lg shadow-md"
-                priority
-              />
-            </SwiperSlide>
+            {eventsData?.map((el) => (
+              <SwiperSlide key={el.id} className="shadow-lg">
+                <Image
+                  src={el.photo}
+                  alt={el.title}
+                  layout="responsive"
+                  width={1920}
+                  height={1080}
+                  className="rounded-lg bg-blue-50/30"
+                />
+              </SwiperSlide>
+            ))}
           </Swiper>
           <header className="text-white flex flex-col lg:ml-8">
             <h1 className="font-bold text-3xl my-6 lg:text-5xl 2xl:text-6xl 2xl:mb-14">

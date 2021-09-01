@@ -9,9 +9,11 @@ import Footer from '../components/Footer';
 import useSWR from 'swr';
 
 export default function Home() {
-  const { data: eventsData } = useSWR('/api/events');
-  const { data: docsData } = useSWR('/api/docs');
-
+  let { data: eventsData } = useSWR('/api/events');
+  let { data: docsData } = useSWR('/api/docs');
+  if (eventsData) {
+    eventsData = eventsData.data.sort((a, b) => (a.date < b.date ? -1 : 1));
+  }
   return (
     <div className="overflow-x-hidden relative">
       <Head>
@@ -42,9 +44,9 @@ export default function Home() {
 
       {/* Page Content */}
       <main className="bg-blue-50/30 relative">
-        <Hero />
+        <Hero eventsData={eventsData} />
         <Objective />
-        <Events eventsData={eventsData?.data} />
+        <Events eventsData={eventsData} />
         <Docs docsData={docsData?.data} />
         <Footer />
         <FloatingButton />
