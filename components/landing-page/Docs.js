@@ -28,17 +28,23 @@ export default function Docs({ docsData }) {
   return (
     <section className="py-10" id="docs">
       <SectionHeader text="Dokumentasi" />
-      <div className="max-w-max mx-auto md:grid md:grid-cols-2 md:max-w-4xl md:gap-x-8 sm:justify-items-center lg:max-w-5xl">
-        {docsData?.map((el, key) => (
-          <DocsContent
-            key={el.id}
-            pos={key}
-            src={el.photo}
-            title={el.events.title}
-            text={el.desc}
-          />
-        ))}
-      </div>
+      {docsData?.length > 0 ? (
+        <div className="max-w-max mx-auto md:grid md:grid-cols-2 md:max-w-4xl md:gap-x-8 sm:justify-items-center lg:max-w-5xl">
+          {docsData.map((el, key) => (
+            <DocsContent
+              key={el.id}
+              pos={key}
+              src={el.photo}
+              title={el.events.title}
+              text={el.desc}
+            />
+          ))}
+        </div>
+      ) : (
+        <p className="text-center text-gray-600">
+          Data dokumentasi belum tersedia.
+        </p>
+      )}
     </section>
   );
 }
