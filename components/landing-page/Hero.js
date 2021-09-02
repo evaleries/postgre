@@ -44,8 +44,7 @@ export default function Hero({ eventsData }) {
               POSTGRE 2021
             </h1>
             <div className="font-medium text-lg mb-8 lg:text-xl 2xl:text-2xl 2xl:mb-16">
-              <h2>Kembangkan skill kamu</h2>
-              <h2>dengan pemateri profesional</h2>
+              <h2>Talkshow dan webinar yang memungkinkan kamu untuk mengetahui seluk beluk dunia professional dan bagaimana agar kamu bisa mencapainya</h2>
             </div>
             <button className="font-sans2 font-bold text-[#004BA7] bg-white rounded-br-3xl shadow-md w-max py-2 px-4 2xl:text-2xl hover:bg-gray-100 hover:scale-105 active:scale-100 transition-all">
               <a href="#events">Daftar Sekarang</a>
