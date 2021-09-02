@@ -33,7 +33,9 @@ export default async function upload_docs(req, res) {
                         let filename = files.photo[0].originalFilename.split('.')
                         filename.splice(filename.length - 1, 1)
                         filename = filename.join(".") + pid + "." + extension
-                        await supabase.storage.from(bucket).upload(dest + filename, buf)
+                        await supabase.storage.from(bucket).upload(dest + filename, buf, {
+                            contentType: extension == "png" ? "image/png" : extension == "jpg" || "jpeg" ? "image/jpeg" : extension == "gif" ? "image/gif" : "text/plain;charset=UTF-8"
+                        })
                         //get public url
                         let publicURL = await supabase.storage.from(bucket).getPublicUrl(dest + filename).publicURL
 
