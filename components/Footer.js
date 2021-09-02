@@ -3,8 +3,8 @@ import { FiMail, FiYoutube, FiInstagram } from 'react-icons/fi';
 
 function FooterSection({ children }) {
   return (
-    <div className="w-96 my-4">
-      <div className="w-max mx-auto">{children}</div>
+    <div className="w-96 my-4 px-4">
+      <div className="w-max md:mx-auto">{children}</div>
     </div>
   );
 }

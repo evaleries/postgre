@@ -9,6 +9,7 @@ function PresentersCard({ src, name, position, place }) {
           alt={name}
           layout="fill"
           objectFit="cover"
+          objectPosition="50% 20%"
           className="rounded-xl"
         />
       </div>

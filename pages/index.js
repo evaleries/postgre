@@ -15,7 +15,7 @@ export default function Home() {
     eventsData = eventsData.data.sort((a, b) => (a.date < b.date ? -1 : 1));
   }
   return (
-    <div className="overflow-x-hidden relative">
+    <div className="overflow-hidden relative">
       <Head>
         <title>
           POSTGRE 2021 | Kembangkan skill kamu dengan pemateri profesional
