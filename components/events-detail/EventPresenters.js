@@ -10,10 +10,10 @@ function PresentersCard({ src, name, position, place }) {
           layout="fill"
           objectFit="cover"
           objectPosition="50% 20%"
-          className="rounded-xl"
+          className="rounded-xl bg-blue-50"
         />
       </div>
-      <div className="space-y-2 m-4">
+      <div className="space-y-2 my-4 w-48 sm:mx-4 sm:w-auto">
         <div className="leading-tight">
           <h3>Nama</h3>
           <p className="text-xl text-[#004BA7] font-semibold">{name}</p>

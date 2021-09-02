@@ -44,7 +44,7 @@ export default function Hero({ eventsData }) {
               ))}
             </Swiper>
           )}
-          <header className="text-white flex flex-col lg:ml-8">
+          <header className="text-white flex flex-col lg:ml-8 px-4">
             <h1 className="font-bold text-3xl my-6 lg:text-5xl 2xl:text-6xl 2xl:mb-14">
               POSTGRE 2021
             </h1>
