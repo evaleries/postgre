@@ -93,8 +93,12 @@ async function insertPartisipan(nama, email, whatsapp, asal, info, id_event) {
     if(res.error)
         throw res.error;
 
-    const template = await (await fetch(events.body[0].template)).text()
-    sendmail(email, events.body[0].title, events.body[0].title, template)
+    fetch(events.body[0].template).then(val => {
+        val.text().then(src => {
+            sendmail(email, events.body[0].title, events.body[0].title, src)
+        })
+    })
+    
     return res.body;
 }
 
