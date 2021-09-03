@@ -2,8 +2,9 @@ import { HiOutlineCalendar, HiOutlineLocationMarker } from 'react-icons/hi';
 import { useRouter } from 'next/router';
 import convertDate from '../../utils/convertDate';
 
-export default function EventHeader({ title, date, startTime }) {
+export default function EventHeader({ title, date, startTime, open_date }) {
   const router = useRouter();
+  const now = new Date();
   return (
     <div className="relative md:flex items-center justify-between">
       {/* Ticket */}
@@ -11,9 +12,14 @@ export default function EventHeader({ title, date, startTime }) {
         <div className="px-4">
           <p className="text-xs">Harga tiket</p>
           <p className="text-[#004BA7] text-3xl font-semibold">Free</p>
-          <p className="text-sm mt-2 mb-4">Tiket tersedia</p>
+          {now > new Date(open_date) ? (
+            <p className="text-sm mt-2 mb-4">Tiket tersedia</p>
+          ) : (
+            <p className="text-sm mt-2 mb-4">Pendaftaran akan dibuka pada tanggal {convertDate(open_date)}</p>
+          )}
         </div>
-        <button
+        {now > new Date(open_date) ? (
+          <button
           className="bg-[#004BA7] text-white rounded-xl w-full py-2 hover:bg-[#99A8BB] active:text-gray-300"
           type="button"
           onClick={() =>
@@ -25,6 +31,9 @@ export default function EventHeader({ title, date, startTime }) {
         >
           Daftar Sekarang
         </button>
+          ) : (
+            ""
+          )}
       </div>
 
       {/* Information */}

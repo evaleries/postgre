@@ -81,6 +81,7 @@ export default function Events() {
             title={eventsData?.title}
             date={eventsData?.date}
             startTime={eventsData?.start_time}
+            open_date={eventsData?.open_date}
           />
           <EventDescription desc={eventsData?.desc} />
           <EventPresenters presentersData={presentersData} />
