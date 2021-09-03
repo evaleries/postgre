@@ -11,6 +11,8 @@ import Link from 'next/link';
 
 export default function Pendaftaran() {
   const router = useRouter();
+
+  const [isLoading, setIsLoading] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [isFailed, setIsFailed] = useState(false);
   const [failMessage, setFailMessage] = useState('');
@@ -43,8 +45,9 @@ export default function Pendaftaran() {
             info: '',
           }}
           validationSchema={schema}
-          onSubmit={async (values) => {
-            const fetchData = await fetch('/api/users', {
+          onSubmit={(values) => {
+            setIsLoading(true);
+            fetch('/api/users', {
               method: 'POST',
               body: JSON.stringify({
                 ...values,
@@ -53,14 +56,18 @@ export default function Pendaftaran() {
               headers: {
                 'Content-type': 'application/json; charset=UTF-8',
               },
-            }).then((response) => response.json());
-            if (fetchData.success) {
-              setIsSuccess(true);
-              setTimeout(() => router.back(), 2000);
-            } else {
-              setFailMessage(fetchData.message);
-              setIsFailed(true);
-            }
+            })
+              .then((response) => response.json())
+              .then((responseJSON) => {
+                setIsLoading(false);
+                if (responseJSON.success) {
+                  setIsSuccess(true);
+                  setTimeout(() => router.back(), 2000);
+                } else {
+                  setFailMessage(responseJSON.message);
+                  setIsFailed(true);
+                }
+              });
           }}
         >
           {({ setFieldValue }) => (
@@ -108,7 +115,7 @@ export default function Pendaftaran() {
           className="fixed z-10 inset-0 overflow-y-auto"
         >
           <div className="flex items-center justify-center min-h-screen mx-8">
-            <Dialog.Overlay className="fixed inset-0 bg-black opacity-50 cursor-pointer" />
+            <Dialog.Overlay className="fixed inset-0 bg-black/50 cursor-pointer" />
             <Transition.Child
               as={Fragment}
               enter="transition duration-300 ease-out"
@@ -143,7 +150,7 @@ export default function Pendaftaran() {
           className="fixed z-10 inset-0 overflow-y-auto"
         >
           <div className="flex items-center justify-center min-h-screen mx-8">
-            <Dialog.Overlay className="fixed inset-0 bg-black opacity-50 cursor-pointer" />
+            <Dialog.Overlay className="fixed inset-0 bg-black/50 cursor-pointer" />
             <Transition.Child
               as={Fragment}
               enter="transition duration-300 ease-out"
@@ -171,6 +178,17 @@ export default function Pendaftaran() {
           </div>
         </Dialog>
       </Transition>
+
+      {/* Loading */}
+      {isLoading && (
+        <div className="fixed z-10 inset-0 overflow-y-auto bg-blue-50/20">
+          <div className="flex items-center justify-center min-h-screen">
+            <div>
+              <img src="/assets/spinner.gif" alt="loading" />
+            </div>
+          </div>
+        </div>
+      )}
     </>
   );
 }
