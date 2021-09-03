@@ -56,6 +56,7 @@ export default function Pendaftaran() {
             }).then((response) => response.json());
             if (fetchData.success) {
               setIsSuccess(true);
+              setTimeout(() => router.back(), 2000);
             } else {
               setFailMessage(fetchData.message);
               setIsFailed(true);
