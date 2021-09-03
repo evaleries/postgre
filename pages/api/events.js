@@ -129,6 +129,7 @@ export default async function events(req, res) {
                 result.status = 200;
                 result.success = false;
                 result.message = "No data"
+                result.data = []
             }
             break
         case "PUT":
