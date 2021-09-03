@@ -45,6 +45,9 @@ async function getEvents(filter) {
         }
         res.body[i].presenters = _;
     }
+
+    if(res.body.length == 0)
+        return -1; //success = false, data gak ada
     return res.body
 }
 
@@ -122,6 +125,12 @@ export default async function events(req, res) {
             break
         case "GET":
             result.data = query.id || query.year || query.eventId ? await getEvents(query) : await getEvents()
+            if(result.data == -1) {
+                result.status = 200;
+                result.success = false;
+                result.message = "No data"
+                result.data = []
+            }
             break
         case "PUT":
             if(body.id) {
