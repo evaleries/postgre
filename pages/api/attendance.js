@@ -16,10 +16,10 @@ export default async function events(req, res) {
         method,
     } = req;
     switch(method) {
-        case "GET":
-            if(query.email && query.eventId) {
+        case "POST":
+            if(body.email && body.eventId) {
                 //get date 
-                const ev = await supabase.from("events").select("*").eq("attendance", "https://postgre.pemro.id/attendance?eventId=" + query.eventId)
+                const ev = await supabase.from("events").select("*").eq("attendance", "https://postgre.pemro.id/attendance?eventId=" + body.eventId)
                 if(ev.body.length == 0) {
                     //id not found
                     result.status = 200;
@@ -39,7 +39,7 @@ export default async function events(req, res) {
                     if(new Date() <= end_date && new Date >= start_date) {
                         //ok, hadir
                         //cek kehadiran dulu, lek blm baru hadirkan
-                        const check = await supabase.from(tableName).select("present").eq("id_event", ev.body[0].id).eq("email", query.email)
+                        const check = await supabase.from(tableName).select("present").eq("id_event", ev.body[0].id).eq("email", body.email)
                         console.log(check)
                         if(check.body.length > 0) {
                             //found
@@ -50,7 +50,7 @@ export default async function events(req, res) {
                                 result.message = "Sudah melakukan presensi"
                             } else {
                                 //belum presensi
-                                const presensi = await supabase.from(tableName).update({present: true, attendance_date: new Date()}).eq("id_event", ev.body[0].id).eq("email", query.email)
+                                const presensi = await supabase.from(tableName).update({present: true, attendance_date: new Date()}).eq("id_event", ev.body[0].id).eq("email", body.email)
                                 if(presensi.error) {
                                     throw presensi.error;
                                 } else {
