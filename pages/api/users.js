@@ -159,26 +159,26 @@ export default async function partisipan(req, res) {
                 result.data = await insertPartisipan(body.nama, body.email, body.whatsapp, body.asal, body.info, body.id_event);
                 if(result.data == 0) {
                     result.success = false;
-                    result.message = "Belum buka"
+                    result.message = "Pendaftaran untuk series ini belum dibuka."
                     result.data = []
                 }
                 else if(result.data == -1) {
                     result.success = false;
-                    result.message = "Kelewat tanggal"
+                    result.message = "Pendaftaran telah ditutup."
                     result.data = []
                 }
                 else if(result.data == -2) {
                     result.success = false;
-                    result.message = "Email sudah terdaftar"
+                    result.message = "Email sudah terdaftar."
                     result.data = []
                 }
                 else if(result.data == -3) {
                     result.success = false;
-                    result.message = "Nomor sudah terdaftar"
+                    result.message = "Nomor sudah terdaftar."
                     result.data = []
                 } else if(result.data == 1) {
                     result.success = false;
-                    result.message = "eventID not found"
+                    result.message = "eventID not found."
                     result.data = []
                 }
             } else {
