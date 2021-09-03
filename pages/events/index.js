@@ -5,6 +5,7 @@ import EventDescription from '../../components/events-detail/EventDescription';
 import EventHeader from '../../components/events-detail/EventHeader';
 import EventHero from '../../components/events-detail/EventHero';
 import EventPresenters from '../../components/events-detail/EventPresenters';
+import custom404 from '../404';
 import useSWR from 'swr';
 
 export default function Events() {
@@ -29,6 +30,10 @@ export default function Events() {
     );
   }
 
+  //No Data
+  if (!eventsData?.data[0]) {
+    return custom404();
+  }
   eventsData = eventsData?.data[0];
   presentersData = presentersData?.data.filter((el) => el.id_event == eventId);
 
