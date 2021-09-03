@@ -17,9 +17,7 @@ export default function Home() {
   return (
     <div className="overflow-hidden relative">
       <Head>
-        <title>
-          POSTGRE 2021 | Kembangkan skill kamu dengan pemateri profesional
-        </title>
+        <title>POSTGRE 2021 | Pemro Share, Talk, and Greet</title>
       </Head>
 
       {/* Background Ornament */}
@@ -47,7 +45,7 @@ export default function Home() {
         <Hero eventsData={eventsData} />
         <Objective />
         <Events eventsData={eventsData} />
-        <Docs docsData={docsData?.data} />
+        {/* <Docs docsData={docsData?.data} /> */}
         <Footer />
         <FloatingButton />
       </main>
