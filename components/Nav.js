@@ -11,7 +11,7 @@ export default function Nav() {
 
       <ul className="hidden sm:flex space-x-6 text-white font-medium">
         <li className="hover:scale-105 active:scale-100 transition-transform">
-          <a href="#objective">Tujuan</a>
+          <a href="#objective">Tentang</a>
         </li>
         <li className="hover:scale-105 active:scale-100 transition-transform">
           <a href="#events">Acara</a>
@@ -32,7 +32,7 @@ export default function Nav() {
         </Menu.Button>
         <Menu.Items className="absolute bg-white right-0 flex flex-col space-y-4 py-4 px-12 z-50 rounded-md font-medium">
           <Menu.Item>
-            <a href="#objective">Tujuan</a>
+            <a href="#objective">Tentang</a>
           </Menu.Item>
           <Menu.Item>
             <a href="#events">Acara</a>
