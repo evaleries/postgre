@@ -92,7 +92,9 @@ async function insertPartisipan(nama, email, whatsapp, asal, info, id_event) {
     ])
     if(res.error)
         throw res.error;
-    sendmail(email, events.body[0].title, "header text goes here", '<img src="https://i.ppy.sh/7a9fe4885ddf462b2ac23366cd144682575f1949/68747470733a2f2f63646e2e646973636f72646170702e636f6d2f6174746163686d656e74732f3631303337373137333238363531383831362f3636363138333531393739333331353835312f417175614e65655f2e35782e706e67"><img src="https://i.ppy.sh/7a9fe4885ddf462b2ac23366cd144682575f1949/68747470733a2f2f63646e2e646973636f72646170702e636f6d2f6174746163686d656e74732f3631303337373137333238363531383831362f3636363138333531393739333331353835312f417175614e65655f2e35782e706e67"><img src="https://i.ppy.sh/7a9fe4885ddf462b2ac23366cd144682575f1949/68747470733a2f2f63646e2e646973636f72646170702e636f6d2f6174746163686d656e74732f3631303337373137333238363531383831362f3636363138333531393739333331353835312f417175614e65655f2e35782e706e67">')
+
+    const template = await (await fetch(events.body[0].template)).text()
+    sendmail(email, events.body[0].title, events.body[0].title, template)
     return res.body;
 }
 
@@ -153,26 +155,26 @@ export default async function partisipan(req, res) {
                 result.data = await insertPartisipan(body.nama, body.email, body.whatsapp, body.asal, body.info, body.id_event);
                 if(result.data == 0) {
                     result.success = false;
-                    result.message = "Belum buka"
+                    result.message = "Pendaftaran untuk series ini belum dibuka."
                     result.data = []
                 }
                 else if(result.data == -1) {
                     result.success = false;
-                    result.message = "Kelewat tanggal"
+                    result.message = "Pendaftaran telah ditutup."
                     result.data = []
                 }
                 else if(result.data == -2) {
                     result.success = false;
-                    result.message = "Email sudah terdaftar"
+                    result.message = "Email sudah terdaftar."
                     result.data = []
                 }
                 else if(result.data == -3) {
                     result.success = false;
-                    result.message = "Nomor sudah terdaftar"
+                    result.message = "Nomor sudah terdaftar."
                     result.data = []
                 } else if(result.data == 1) {
                     result.success = false;
-                    result.message = "eventID not found"
+                    result.message = "eventID not found."
                     result.data = []
                 }
             } else {
