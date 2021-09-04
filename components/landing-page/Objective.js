@@ -45,7 +45,7 @@ export default function Objective() {
             className="absolute h-full w-full bg-black/70 cursor-pointer"
             onClick={() => setModalOpen(false)}
           ></div>
-          <div className="relative w-full inset-0 max-w-screen-md h-full overflow-y-scroll scrollbar-hide">
+          <div className="relative w-full inset-0 max-w-screen-md max-h-full overflow-y-scroll scrollbar-hide">
             <Image
               src="/assets/poster.png"
               layout="responsive"
