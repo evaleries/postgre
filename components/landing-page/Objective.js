@@ -26,12 +26,12 @@ export default function Objective() {
         <div className="relative flex-1 xl:text-xl 2xl:text-2xl px-4">
           <p>
             Pemro Share, Talk, and Greet <strong>(POSTGRE)</strong> adalah
-            kegiatan yang diselenggarakan setahun sekali sejak 2020 untuk
-            mempersiapkan masyarakat umum terutama mahasiswa dalam menghadapi
+            kegiatan yang diselenggarakan oleh Laboratorium Pemrograman setahun sekali sejak 2020
+            untuk mempersiapkan masyarakat umum terutama mahasiswa dalam menghadapi
             dunia kerja nantinya.
           </p>
           <p className="mt-4">
-            Disini kita berbagi bermacam pengetahuan yang disampaikan oleh
+            Pada acara ini, kami akan berbagi bermacam pengetahuan yang disampaikan oleh
             pemateri profesional dan dikemas dalam webinar yang menarik dan
             interaktif.
           </p>
