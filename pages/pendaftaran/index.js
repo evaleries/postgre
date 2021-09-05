@@ -62,7 +62,7 @@ export default function Pendaftaran() {
                 setIsLoading(false);
                 if (responseJSON.success) {
                   setIsSuccess(true);
-                  setTimeout(() => router.push('/success'), 1500);
+                  setTimeout(() => router.push('/pendaftaran/success'), 1500);
                 } else {
                   setFailMessage(responseJSON.message);
                   setIsFailed(true);

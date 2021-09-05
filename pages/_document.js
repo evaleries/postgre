@@ -11,6 +11,7 @@ class MyDocument extends Document {
       <Html>
         <Head>
           <link rel="icon" href="/favicon.svg" />
+          <meta name="theme-color" content="#004BA7" />
         </Head>
         <body>
           <Main />
