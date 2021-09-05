@@ -13,6 +13,7 @@ export const sendmail = function(to, subject, text, html) {
     mg.messages().send(mail, function(err, res) {
         console.log(err)
         console.log(res)
+        //test
         if(err)
             return err
         return res
