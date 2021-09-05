@@ -8,15 +8,20 @@
   "dependencies": {
     "@headlessui/react": "^1.4.0",
     "@supabase/supabase-js": "^1.21.0",
+    "formik": "^2.2.9",
     "fs": "0.0.1-security",
     "mailgun-js": "^0.22.0",
     "multiparty": "^4.2.2",
     "next": "latest",
+    "nodemailer": "^6.6.3",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-icons": "^4.2.0",
     "supabase": "^0.5.0",
-    "swiper": "^6.8.1"
+    "swiper": "^6.8.1",
+    "swr": "^0.5.6",
+    "tailwind-scrollbar-hide": "^1.0.3",
+    "yup": "^0.32.9"
   },
   "devDependencies": {
     "autoprefixer": "^10.2.6",
