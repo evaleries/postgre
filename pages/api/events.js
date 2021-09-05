@@ -20,6 +20,8 @@ async function getEvents(filter) {
         if(filter.id || filter.eventId) {
             if(filter.eventId)
                 filter.id = filter.eventId
+            if(parseInt(filter.id) == NaN)
+                return -1; //err 404
             res = await supabase.from(tableName).select("*").eq("id", parseInt(filter.id))
         } else if(filter.year) {
             res.body = res.body.filter(function (value, index, array) {
