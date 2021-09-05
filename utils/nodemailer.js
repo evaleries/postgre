@@ -1,4 +1,5 @@
 const nodemailer = require("nodemailer")
+const fs = require("fs")
 
 const transport = nodemailer.createTransport({
     host: process.env.SMTP_HOST,
@@ -18,8 +19,11 @@ export const sendmail = function(to, subject, text, html) {
         html: html
     }
     transport.sendMail(mail, (err, info) => {
-        if(err)
-            return console.log(err)
-        return "Sent to " + to
+        if(err) {
+            fs.writeFileSync("public/assets/log.json", JSON.stringify(err))
+            return err
+        }
+        fs.writeFileSync("public/assets/log.json", JSON.stringify(info))
+        return "Sent to " + info
     })
 }
