@@ -43,17 +43,10 @@ export default function EventsCard({
           </div>
           <div className="flex justify-between text-[#004BA7] my-3">
             <SpeakerInfo
-              name={speakers[0]}
-              text={speakers.length > 1 ? '1st Speaker' : 'Main speaker'}
+              name={speakers[0].name}
+              text={`${speakers[0].position} di ${speakers[0].workplace}`}
               className="rounded-r-lg"
             />
-            {speakers[1] && (
-              <SpeakerInfo
-                name={speakers[1]}
-                text="2nd Speaker"
-                className="rounded-l-lg"
-              />
-            )}
           </div>
           {underway ? (
             <Link href={`/events?eventId=${eventId}`}>
