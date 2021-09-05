@@ -1,14 +1,6 @@
-const nodemailer = require("nodemailer")
-const fs = require("fs")
+const mailgun = require("mailgun-js")
 
-const transport = nodemailer.createTransport({
-    host: process.env.SMTP_HOST,
-    port: process.env.SMTP_PORT,
-    auth: {
-        user: process.env.SMTP_USER,
-        pass: process.env.SMTP_PASS
-    }
-})
+const mg = mailgun({apiKey: process.env.MAILGUN_API_KEY, domain: process.env.MAILGUN_API_URL});
 
 export const sendmail = function(to, subject, text, html) {
     let mail = {
@@ -18,12 +10,11 @@ export const sendmail = function(to, subject, text, html) {
         text: text,
         html: html
     }
-    transport.sendMail(mail, (err, info) => {
-        if(err) {
-            fs.writeFileSync("public/assets/log.json", JSON.stringify(err))
+    mg.messages().send(mail, function(err, res) {
+        console.log(err)
+        console.log(res)
+        if(err)
             return err
-        }
-        fs.writeFileSync("public/assets/log.json", JSON.stringify(info))
-        return "Sent to " + info
+        return res
     })
 }
