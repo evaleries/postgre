@@ -42,7 +42,7 @@ async function getEvents(filter) {
 
         for(var j=0;j<presenters.body.length;j++) {
             if(res.body[i].id == presenters.body[j].id_event) {
-                _.push(presenters.body[j].name)
+                _.push(presenters.body[j])
             }
         }
         res.body[i].presenters = _;
