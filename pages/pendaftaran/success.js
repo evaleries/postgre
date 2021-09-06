@@ -28,7 +28,11 @@ export default function success() {
           <h1 className="font-medium text-lg sm:text-xl text-center my-4">
             Pendaftaran Berhasil
           </h1>
-          <div className="bg-white rounded-md w-full mx-auto flex flex-col items-center">
+          {router.query.eventName && (
+            <p className="font-medium pb-2">{`Event yang anda daftar: ${router.query.eventName}`}</p>
+          )}
+
+          <div className="bg-white rounded-md w-full mx-auto flex flex-col items-center text-center">
             <p className="px-2 text-sm font-medium">
               Pendaftaran telah berhasil.{' '}
               <strong>

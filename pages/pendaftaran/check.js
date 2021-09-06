@@ -27,10 +27,14 @@ export default function Check() {
         >
           <HiChevronLeft className="mx-2 h-10 w-10 sm:h-12 sm:w-12 text-[#004BA7] hover:text-blue-500 transition-colors" />
         </div>
-        <img
-          src="/assets/logo.svg"
-          className="h-10 sm:h-12 object-contain mx-auto"
-        />
+        <div className="w-max mx-auto">
+          <a href="https://pemro.id/" target="_blank">
+            <img
+              src="/assets/logo.svg"
+              className="h-10 sm:h-12 object-contain mx-auto"
+            />
+          </a>
+        </div>
         <h1 className="font-medium text-lg sm:text-xl text-center my-4">
           Registration Check
         </h1>

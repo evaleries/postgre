@@ -15,25 +15,27 @@ export default function EventHeader({ title, date, startTime, open_date }) {
           {now > new Date(open_date) ? (
             <p className="text-sm mt-2 mb-4">Tiket tersedia</p>
           ) : (
-            <p className="text-sm mt-2 mb-4">Pendaftaran akan dibuka pada tanggal {convertDate(open_date)}</p>
+            <p className="text-sm mt-2 mb-4">
+              Pendaftaran akan dibuka pada tanggal {convertDate(open_date)}
+            </p>
           )}
         </div>
         {now > new Date(open_date) ? (
           <button
-          className="bg-[#004BA7] text-white rounded-xl w-full py-2 hover:bg-[#99A8BB] active:text-gray-300"
-          type="button"
-          onClick={() =>
-            router.push({
-              pathname: '/pendaftaran',
-              query: { eventId: router.query.eventId },
-            })
-          }
-        >
-          Daftar Sekarang
-        </button>
-          ) : (
-            ""
-          )}
+            className="bg-[#004BA7] text-white rounded-xl w-full py-2 hover:bg-[#99A8BB] active:text-gray-300"
+            type="button"
+            onClick={() =>
+              router.push({
+                pathname: '/pendaftaran',
+                query: { eventId: router.query.eventId, eventName: title },
+              })
+            }
+          >
+            Daftar Sekarang
+          </button>
+        ) : (
+          ''
+        )}
       </div>
 
       {/* Information */}
