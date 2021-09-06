@@ -62,7 +62,14 @@ export default function Pendaftaran() {
                 setIsLoading(false);
                 if (responseJSON.success) {
                   setIsSuccess(true);
-                  setTimeout(() => router.push('/pendaftaran/success'), 1500);
+                  setTimeout(
+                    () =>
+                      router.push({
+                        pathname: '/pendaftaran/success',
+                        query: { eventName: router.query.eventName },
+                      }),
+                    1500
+                  );
                 } else {
                   setFailMessage(responseJSON.message);
                   setIsFailed(true);
@@ -78,12 +85,16 @@ export default function Pendaftaran() {
               >
                 <HiChevronLeft className="mx-2 h-10 w-10 sm:h-12 sm:w-12 text-[#004BA7] hover:text-blue-500 transition-colors" />
               </div>
-              <img
-                src="/assets/logo.svg"
-                className="h-10 sm:h-12 object-contain mx-auto"
-              />
-              <h1 className="font-medium text-lg sm:text-xl text-center my-4">
-                Pendaftaran Event
+              <div className="w-max mx-auto">
+                <a href="https://pemro.id/" target="_blank">
+                  <img
+                    src="/assets/logo.svg"
+                    className="h-10 sm:h-12 object-contain mx-auto"
+                  />
+                </a>
+              </div>
+              <h1 className="font-medium text-lg sm:text-xl text-center mt-8 mb-4">
+                Pendaftaran Event {router.query.eventName}
               </h1>
               <Form className="my-4 w-10/12 sm:w-full mx-auto sm:px-10 space-y-6">
                 <TextInput />

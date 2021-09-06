@@ -5,7 +5,9 @@ import Link from 'next/link';
 export default function Nav() {
   return (
     <nav className="flex justify-between items-center py-4 2xl:text-xl mx-auto max-w-[300px] sm:max-w-xl md:max-w-2xl lg:max-w-3xl xl:max-w-4xl">
-      <img src="/assets/logo.svg" className="h-12 object-contain 2xl:h-16" />
+      <a href="https://pemro.id/" target="_blank">
+        <img src="/assets/logo.svg" className="h-12 object-contain 2xl:h-16" />
+      </a>
 
       {/* Tablet/Laptop */}
 
