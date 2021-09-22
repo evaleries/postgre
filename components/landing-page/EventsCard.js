@@ -56,7 +56,7 @@ export default function EventsCard({
             </Link>
           ) : (
             <button className="font-sans2 font-bold bg-gray-600 hover:bg-gray-700 text-white transition-all shadow-md w-full py-3 mt-1 active:text-gray-300">
-              Lihat Event
+              Event Selesai
             </button>
           )}
         </div>
